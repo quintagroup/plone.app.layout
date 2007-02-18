@@ -26,6 +26,6 @@ class AnalyticsViewlet(BrowserView):
     def render(self):
         """render the webstats snippet"""
         ptool = getToolByName(self.context,"portal_properties")
-        snippet = ptool.site_properties.webstats_js
+        snippet = ptool.site_properties.getProperty("webstats_js","")
         return snippet
 
