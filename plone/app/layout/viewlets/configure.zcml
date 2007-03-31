@@ -109,7 +109,7 @@
     <!-- Render lock info -->
     <browser:viewlet
         name="plone.lockinfo"
-        manager=".interfaces.IBelowContentTitle"
+        manager=".interfaces.IAboveContent"
         class="plone.locking.browser.info.LockInfoViewlet"
         permission="cmf.ModifyPortalContent"
         for="plone.locking.interfaces.ITTWLockable"
