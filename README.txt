@@ -1,7 +1,6 @@
-plone.app.layout Package Readme
-=========================
+sitemap package
+---------------
 
-Overview
---------
+Contains the implementation for sitemap.xml.gz to hold a sitemap of all URLs
+for e.g. Google (SEO)
 
-Layout mechanisms for Plone
