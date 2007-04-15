@@ -4,10 +4,10 @@ from zope.publisher.interfaces import NotFound
 from Products.CMFCore.interfaces import ICatalogTool
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.component import getSiteManager
 
 from cStringIO import StringIO
 from gzip import GzipFile
-
 
 class SiteMapView(BrowserView):
     
@@ -22,8 +22,13 @@ class SiteMapView(BrowserView):
         # create the sitemap
         catalog = getToolByName(self.context,"portal_catalog")
         all = catalog.searchResults()
-        
-        return all
+        results = []
+        for item in all:
+            lastmod = item.modified.toZone("GMT+0").strftime("%Y-%m-%dT%H:%M:%S+00:00")
+            data = {'url': item.getURL(),
+                    'lastmod': lastmod}
+            results.append(data)
+        return results
         
     def __call__(self):
         """render the template and compress it"""
