@@ -24,20 +24,21 @@ class SiteMapTestCase(FunctionalTestCase):
         self.uf = self.portal.acl_users
         self.uf.userFolderAddUser('root', 'secret', ['Manager'], [])
         
-        self.ptool = self.getToolByName('portal_properties')
+        self.ptool = getToolByName(self.portal, 'portal_properties')
         self.site_props = self.ptool.site_properties
+        # we have to add the property here, cause it's not available in
+        # Plone 2.5 by default
+        self.site_props._setProperty('enable_sitemap', False, 'boolean')
         
     def loginAsManager(self):
-        """points the browser to the login screen and logs in as user root with Manager role."""
+        """points the browser to the login screen and logs in as user root
+        with Manager role."""
+
         self.browser.open('http://nohost/plone/')
         self.browser.getLink('Log in').click()
         self.browser.getControl('Login Name').value = 'root'
         self.browser.getControl('Password').value = 'secret'
         self.browser.getControl('Log in').click()
-    
-    def getToolByName(self, name):
-        """docstring for getToolByName"""
-        return getToolByName(self.portal, name)
 
 
 def test_suite():
