@@ -25,10 +25,10 @@
 
        <ul>
            <li tal:condition="python:results" tal:repeat="result typeinfo/results">
-               <span tal:omit-tag="" i18n:translate="search_result_term">
+               <a tal:attributes="href result/url" i18n:translate="search_result_term">
                     <span i18n:name="title" tal:content="result/title">Page title</span>
                     <span i18n:name="score" tal:content="string:[${result/score}%]" class="score">[100%]</span>
-                </span>
+               </a>
            </li>
        </ul>
    </tal:block>

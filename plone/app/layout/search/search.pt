@@ -34,12 +34,11 @@
 
                 <dl>
                     <tal:block repeat="result typeinfo/results">
-                    <dt><a tal:attributes="href result/url">
-                        <span tal:omit-tag="" i18n:translate="search_result_term">
-                            <span i18n:name="title" tal:content="result/title">Page title</span>
-                            <span i18n:name="score" tal:content="string:[${result/score}%]" class="score">[100%]</span>
-                        </span>
-                        </a>
+                        <dt>
+                            <a tal:attributes="href result/url" i18n:translate="search_result_term">>
+                                <span i18n:name="title" tal:content="result/title">Page title</span>
+                                <span i18n:name="score" tal:content="string:[${result/score}%]" class="score">[100%]</span>
+                            </a>
                         </dt>
                         <dd tal:content="result/description">Item description</dd>
                     </tal:block>
