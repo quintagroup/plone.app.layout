@@ -27,6 +27,7 @@ viewlets and general views.
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'plone.app.relations',
       ],
       entry_points="""
       # -*- Entry points: -*-

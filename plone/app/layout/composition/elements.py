@@ -1,4 +1,8 @@
 from zope import interface
+from zope import component
+from zope.event import notify
+
+from zope.app.container.contained import ObjectAddedEvent
 
 from persistent import Persistent
 from persistent.list import PersistentList
@@ -7,6 +11,9 @@ from persistent.dict import PersistentDict
 from StringIO import StringIO
 
 from plone.app.layout.composition.interfaces import *
+from plone.app.relations.interfaces import IRelationshipSource
+
+from Products.CMFCore.interfaces import ISiteRoot
 
 class Renderable:
     interface.implements(IRenderable)
@@ -38,12 +45,32 @@ class Column(Container):
 
 class Tile(Persistent):
     interface.implements(ITile)
+
+    __name__ = u""
     
-    def __init__(self, obj):
-        pass
-    
+    def __init__(self, obj=None):
+        self.__parent__ = component.getUtility(ISiteRoot)
+        
+        notify(ObjectAddedEvent(self))
+        if obj:
+            self.setTarget(obj)
+            
+    def getTarget(self):
+        source = IRelationshipSource(self)
+        for target in source.getTargets():
+            return target
+
+    def setTarget(self, obj):
+        source = IRelationshipSource(self)
+        source.createRelationship(obj)
+
     def render(self, stream=None):
-        output = u""
+        target = self.getTarget()
+
+        if target:
+            output = target.title_or_id()
+        else:
+            output = u""
 
         if stream:
             stream.write(output)

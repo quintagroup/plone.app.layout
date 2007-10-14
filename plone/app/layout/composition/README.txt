@@ -1,6 +1,9 @@
 Composition package
 ===================
 
+  >>> from plone.app.layout.composition.tests import setUp
+  >>> setUp(portal)
+  
 This package adds layout composition capabilities to content objects.
 
 Compositions are rendered by a special view that tries to adapt the container
@@ -29,8 +32,12 @@ Elements are instantiated using simple constructors:
   
   >>> row = elements.Row(u"Some row")
   >>> column = elements.Column(u"Some column")
-  >>> tile = elements.Tile(portal['front-page'])
 
+Let's add a new document and make a tile out of it:
+
+  >>> _ = folder.invokeFactory(id=u"document", type_name='Document')
+  >>> tile = elements.Tile(folder[_])
+  
 We use the standard list interface to add elements:
 
   >>> column.append(tile)
@@ -43,10 +50,10 @@ Rendering
 We can render the entire composition or individual elements:
 
   >>> composition.render()
-  u''
+  u'document'
   >>> row.render()
-  u''
+  u'document'
   >>> column.render()
-  u''
+  u'document'
   >>> tile.render()
-  u''
+  u'document'

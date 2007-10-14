@@ -1,4 +1,5 @@
 from zope.testing import doctest
+
 from unittest import TestSuite
 
 from Testing.ZopeTestCase import FunctionalDocFileSuite
@@ -28,7 +29,7 @@ class LayoutCompositionTestCase(FunctionalTestCase):
 
         # provide layout composition capabilities to ATFolder objects
         provideAdapter(getComposition, (ATFolder,), provides=IComposition)
-
+        
     def getToolByName(self, name):
         """docstring for getToolByName"""
         return getToolByName(self.portal, name)
