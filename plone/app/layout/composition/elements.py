@@ -40,8 +40,8 @@ class Tile(Persistent):
     interface.implements(ITile)
     
     def __init__(self, obj):
-        self.options = PersistentDict()
-
+        pass
+    
     def render(self, stream=None):
         output = u""
 
