@@ -13,5 +13,6 @@
     <include package=".dashboard" />
     <include package=".presentation" />
     <include package=".analytics" />
+    <include package=".search" />
 
 </configure>

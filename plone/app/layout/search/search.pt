@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+
+<body>
+<div metal:fill-slot="main">
+
+    <form method="post">
+        <input type="text" name="term" tal:attributes="value request/term|nothing"/>
+        <input type="submit" name="action.submit" value="Search"/>
+    </form>
+
+    <div tal:condition="view/hasSearchQuery">
+        <tal:block define="results view/groupedSearch">
+            <p tal:condition="python:not results" i18n:translate="label_no_search_results">
+                You search query did not return any results.
+            </p>
+
+            <tal:block tal:repeat="typeinfo results">
+            <h2 i18n:translate="label_type_search_results"><span i18n:name="portal_type" tal:content="typeinfo/title">Document</span> search results</h2>
+
+                <dl>
+                    <tal:block repeat="result typeinfo/results">
+                        <dt><a tal:content="result/title" tal:attributes="href result/url">Page title</a></dt>
+                        <dd tal:content="result/description">Item description</dd>
+                    </tal:block>
+                </dl>
+            </tal:block>
+        </tal:block>
+    </div>
+</div>
+</body>
+</html>
+
