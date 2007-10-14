@@ -1,0 +1,36 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      tal:define="results view/groupedSearch"
+      i18n:domain="plone">
+
+   <tal:block condition="python:not results">
+       <h4 i18n:translate="heading_search_results">Search results&#8230;</h4>
+       <ul>
+           <li>
+               No matching results found.
+           </li>
+       </ul>
+   </tal:block>
+
+   <tal:block tal:repeat="typeinfo results">
+       <h4>
+            <img tal:attributes="src typeinfo/icon"/>
+            <span tal:omit-tag="" i18n:translate="label_type_search_results">
+                <span i18n:name="portal_type" tal:content="typeinfo/title">Document</span> search results
+            </span>
+       </h4>
+
+       <ul>
+           <li tal:condition="python:results" tal:repeat="result typeinfo/results">
+               <span tal:omit-tag="" i18n:translate="search_result_term">
+                    <span i18n:name="title" tal:content="result/title">Page title</span>
+                    <span i18n:name="score" tal:content="string:[${result/score}%]" class="score">[100%]</span>
+                </span>
+           </li>
+       </ul>
+   </tal:block>
+</div>
+

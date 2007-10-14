@@ -10,4 +10,11 @@
         template="search.pt"
         />
     
+    <browser:page
+        for="*"
+        name="livesearch"
+        class=".view.SearchView"
+        permission="zope2.View"
+        template="livesearch.pt"
+        />
 </configure>
