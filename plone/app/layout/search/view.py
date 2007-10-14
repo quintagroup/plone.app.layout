@@ -18,24 +18,34 @@ class SearchView(BrowserView):
 
 
     def getTypes(self):
+        tt=getToolByName(self.context, "portal_types")
+
         factory=getUtility(IVocabularyFactory,
                 name="plone.app.vocabularies.ReallyUserFriendlyTypes")
+
+        typefilter=self.request.form.get("types", [])
 
         types=[]
 
         for v in factory(self.context):
+            if typefilter and v.value not in typefilter:
+                continue
+
             if v.title:
                 title = translate(v.title, context=self.request)
             else:
                 title = translate(v.token, domain='plone', context=self.request)
 
-            types.append(dict(id=v.value, title=title) )
+            info=tt.getTypeInfo(v.value)
+
+            types.append(dict(id=v.value, title=title, icon=info.getIcon()))
 
         return types
 
 
     def hasSearchQuery(self):
         return bool(self.request.form.get("term", "").strip())
+
 
     @property
     def term(self):
@@ -61,7 +71,7 @@ class SearchView(BrowserView):
             result=dict(
                     id=typeinfo["id"],
                     title=typeinfo["title"],
-                    # XXX add icon from the type FTI
+                    icon=typeinfo["icon"],
                     )
 
             query["portal_type"]=typeinfo["id"]

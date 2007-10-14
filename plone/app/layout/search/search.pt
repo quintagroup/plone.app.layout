@@ -25,7 +25,12 @@
             </p>
 
             <tal:block tal:repeat="typeinfo results">
-            <h2 i18n:translate="label_type_search_results"><span i18n:name="portal_type" tal:content="typeinfo/title">Document</span> search results</h2>
+            <h2>
+                <img tal:attributes="src typeinfo/icon"/>
+                <span tal:omit-tag="" i18n:translate="label_type_search_results">
+                    <span i18n:name="portal_type" tal:content="typeinfo/title">Document</span> search results
+                </span>
+            </h2>
 
                 <dl>
                     <tal:block repeat="result typeinfo/results">
