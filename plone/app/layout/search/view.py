@@ -57,13 +57,19 @@ class SearchView(BrowserView):
         return self.request.form.get("local", False)
 
 
+    def baseQuery(self):
+        query=dict(SearchableText=quoteQuery(self.term))
+        if self.local:
+            query["path"]=getNavigationRoot(self.context)
+
+        return query
+
+
     def groupedSearch(self):
         ct=getToolByName(self.context, "portal_catalog")
         types=self.getTypes()
 
-        query=dict(SearchableText=quoteQuery(self.term))
-        if self.local:
-            query["path"]=getNavigationRoot(self.context)
+        query=self.baseQuery()
 
         viewtypes=self.typesWithViewAction()
         results=[]
@@ -96,4 +102,11 @@ class SearchView(BrowserView):
                 results.append(result)
 
         return results
+
+
+class LiveSearchView(SearchView):
+    def baseQuery(self):
+        query=SearchView.baseQuery(self)
+        query["SearchableText"]+="*"
+        return query
 

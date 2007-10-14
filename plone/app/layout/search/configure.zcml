@@ -13,7 +13,7 @@
     <browser:page
         for="*"
         name="livesearch"
-        class=".view.SearchView"
+        class=".view.LiveSearchView"
         permission="zope2.View"
         template="livesearch.pt"
         />
