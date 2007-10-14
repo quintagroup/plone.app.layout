@@ -1,12 +1,12 @@
 Composition package
 ===================
 
-This package adds layout composition capabilities to structural containers,
-e.g. folders.
+This package adds layout composition capabilities to content objects.
 
 Compositions are rendered by a special view that tries to adapt the container
 to the IComposition interface.
 
+  >>> from plone.app.layout.composition.interfaces import IComposition
   >>> composition = IComposition(folder)
   
 Data model
@@ -29,13 +29,13 @@ Elements are instantiated using simple constructors:
   
   >>> row = elements.Row(u"Some row")
   >>> column = elements.Column(u"Some column")
-  >>> proxy = elements.ContentProxy(portal['front-page'])
+  >>> tile = elements.Tile(portal['front-page'])
 
 We use the standard list interface to add elements:
 
-  >>> column += proxy
-  >>> row += column
-  >>> layout += row
+  >>> column.append(tile)
+  >>> row.append(column)
+  >>> layout.append(row)
 
 Rendering
 ---------
@@ -43,6 +43,10 @@ Rendering
 We can render the entire composition or individual elements:
 
   >>> composition.render()
+  u''
   >>> row.render()
+  u''
   >>> column.render()
-  >>> proxy.render()
+  u''
+  >>> tile.render()
+  u''

@@ -4,8 +4,9 @@ from zope import schema
 from Products.CMFPlone import PloneMessageFactory as _
 
 class IRenderable(Interface):
-    def render():
-        """Renders the object in some format."""
+    def render(stream=None):
+        """Renders the object in some format. Outputs to `stream` if
+        applicable."""
 
 class IContainer(IRenderable):
     """This interface is the base class for the layout elements
@@ -19,7 +20,7 @@ class IComposition(IRenderable):
     """A composition object holds a layout and a means to render that
     layout."""
         
-    layout = []
+    layout = schema.List(title=_(u"Layout items"))
 
 class ILayout(Interface):
     pass
@@ -30,9 +31,7 @@ class IRow(IContainer):
 class IColumn(IContainer):
     pass
 
-class IContentProxy(Interface):
-    """Acts as a proxy for a relation to an existing content object.
-    The `options` property holds information on how to render the
-    target object."""
+class ITile(Interface):
+    """A tile is an object that holds content rendering information."""
     
-    options = {}
+    options = schema.Dict(title=_(u"Content rendering information"))
