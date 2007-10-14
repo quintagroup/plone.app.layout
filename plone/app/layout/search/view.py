@@ -61,7 +61,7 @@ class SearchView(BrowserView):
         ct=getToolByName(self.context, "portal_catalog")
         types=self.getTypes()
 
-        query=dict(SearchableText=quoteQuery(self.term), limit=5)
+        query=dict(SearchableText=quoteQuery(self.term))
         if self.local:
             query["path"]=getNavigationRoot(self.context)
 
@@ -81,12 +81,16 @@ class SearchView(BrowserView):
                         title=brain.Title,
                         description=brain.Description,
                         url=brain.getURL(),
+                        score=brain.data_record_normalized_score_,
                         )
                 if brain.Type in viewtypes:
                     info["url"]+="/view"
                 return info
 
-            result["results"]=[morph(brain) for brain in ct.search(query)]
+            brains=ct.search(query)
+
+            result["results"]=[morph(brain) for brain in brains[:5]]
+            result["count"]=len(brains)
 
             if result["results"]:
                 results.append(result)

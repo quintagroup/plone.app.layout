@@ -34,7 +34,13 @@
 
                 <dl>
                     <tal:block repeat="result typeinfo/results">
-                        <dt><a tal:content="result/title" tal:attributes="href result/url">Page title</a></dt>
+                    <dt><a tal:attributes="href result/url">
+                        <span i18n:translate="search_result_term">
+                            <span i18n:name="title" tal:content="result/title">Page title</span>
+                            <span i18n:name="score" tal:content="string:[${result/score}%]" class="score">[100%]</span>
+                        </span>
+                        </a>
+                        </dt>
                         <dd tal:content="result/description">Item description</dd>
                     </tal:block>
                 </dl>
