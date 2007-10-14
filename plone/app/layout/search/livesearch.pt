@@ -7,7 +7,6 @@
       i18n:domain="plone">
 
    <tal:block condition="python:not results">
-       <h4 i18n:translate="heading_search_results">Search results&#8230;</h4>
        <ul>
            <li>
                No matching results found.
