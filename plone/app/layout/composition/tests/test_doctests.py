@@ -35,7 +35,7 @@ class LayoutCompositionTestCase(FunctionalTestCase):
         return getToolByName(self.portal, name)
 
 def test_suite():
-    tests = ['README.txt']
+    tests = ['README.txt', 'component.txt']
     suite = TestSuite()
     for test in tests:
         suite.addTest(FunctionalDocFileSuite(test,

@@ -1,0 +1,4 @@
+<div class="composition">
+  <tal:block repeat="provider options/providers"
+	     replace="structure provider/render" />
+</div>

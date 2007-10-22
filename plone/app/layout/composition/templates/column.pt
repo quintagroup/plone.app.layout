@@ -1,0 +1,4 @@
+<div class="column">
+  <tal:block repeat="viewlet options/viewlets"
+	     replace="structure viewlet/render" />
+</div>

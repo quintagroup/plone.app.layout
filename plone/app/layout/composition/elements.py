@@ -6,30 +6,20 @@ from zope.app.container.contained import ObjectAddedEvent
 
 from persistent import Persistent
 from persistent.list import PersistentList
-from persistent.dict import PersistentDict
-
-from StringIO import StringIO
 
 from plone.app.layout.composition.interfaces import *
 from plone.app.relations.interfaces import IRelationshipSource
 
 from Products.CMFCore.interfaces import ISiteRoot
 
-class Renderable:
-    interface.implements(IRenderable)
+class Composition(PersistentList):
+    interface.implements(IComposition)
     
-    def render(self, stream=None):
-        if stream:
-            for item in self: item.render(stream)
-        else:
-            stream = StringIO()
-            for item in self: item.render(stream)
-            return stream.getvalue()
-
-class Layout(PersistentList, Renderable):
-    interface.implements(ILayout)
-
-class Container(PersistentList, Renderable):
+    def __init__(self, context):
+        super(Composition, self).__init__()
+        self.context = context
+            
+class Container(PersistentList):
     interface.implements(IContainer)
     
     def __init__(self, title=u"", description=u""):
@@ -43,36 +33,29 @@ class Row(Container):
 class Column(Container):
     interface.implements(IColumn)
 
-class Tile(Persistent):
-    interface.implements(ITile)
+class ContentTile(Persistent):
+    interface.implements(IContentTile)
 
     __name__ = u""
     
     def __init__(self, obj=None):
         self.__parent__ = component.getUtility(ISiteRoot)
-        
+        self.view_method = u""
+
         notify(ObjectAddedEvent(self))
-        if obj:
-            self.setTarget(obj)
-            
-    def getTarget(self):
+
+        if obj: self.target = obj
+
+    def _get_target(self):
         source = IRelationshipSource(self)
         for target in source.getTargets():
             return target
 
-    def setTarget(self, obj):
+    def _set_target(self, obj):
         source = IRelationshipSource(self)
         source.createRelationship(obj)
 
-    def render(self, stream=None):
-        target = self.getTarget()
+        # TODO: set a default view method
+        self.view_method = u""
 
-        if target:
-            output = target.title_or_id()
-        else:
-            output = u""
-
-        if stream:
-            stream.write(output)
-        else:
-            return output
+    target = property(_get_target, _set_target)

@@ -1,5 +1,39 @@
-<configure xmlns="http://namespaces.zope.org/zope">
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser">
 
   <include package="plone.app.relations" />
+
+  <utility
+     component=".vocabularies.ViewMethodVocabulary"
+     name="plone.app.layout.composition.vocabularies.ViewMethodVocabulary" />
+
+  <!-- register content providers -->
+
+  <adapter for="plone.app.layout.composition.interfaces.IComposition
+		zope.publisher.interfaces.browser.IDefaultBrowserLayer
+		zope.publisher.interfaces.browser.IBrowserView"
+	   provides="plone.app.layout.composition.interfaces.IComposition"
+	   factory=".providers.CompositionContentProvider" />
+
+  <adapter for="plone.app.layout.composition.interfaces.IRow
+		zope.publisher.interfaces.browser.IDefaultBrowserLayer
+		zope.publisher.interfaces.browser.IBrowserView"
+	   provides="plone.app.layout.composition.interfaces.IRow"
+	   factory=".providers.RowContentProvider" />
+  
+  <adapter for="plone.app.layout.composition.interfaces.IColumn
+		zope.publisher.interfaces.browser.IDefaultBrowserLayer
+		zope.publisher.interfaces.browser.IBrowserView"
+	   provides="plone.app.layout.composition.interfaces.IColumn"
+	   factory=".providers.ColumnContentProvider" />
+
+  <browser:viewlet
+     name=""
+     for="*"
+     manager=".interfaces.IColumn"
+     template="templates/fallback.pt"
+     permission="zope.Public"
+     />	 
 
 </configure>

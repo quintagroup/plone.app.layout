@@ -1,0 +1,4 @@
+<div class="row">
+  <tal:block repeat="provider options/providers"
+	     replace="structure provider/render" />
+</div>
