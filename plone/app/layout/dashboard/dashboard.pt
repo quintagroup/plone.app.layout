@@ -30,7 +30,8 @@
 
     <div class="documentEditable">
 
-        <h5 class="hiddenStructure">Views</h5>
+		<tal:tabs condition="view/is_editable">
+		<h5 class="hiddenStructure">Views</h5>
         
         <ul class="contentViews">
           <li class="selected">
@@ -48,8 +49,9 @@
         <div class="contentActions">
           &nbsp;
         </div>
+        </tal:tabs>
 
-        <div class="documentContent" id="content">
+        <div class="" id="content" tal:attributes="class python:view.is_editable() and 'documentContent' or nothing">
 
             <a name="documentContent"></a>
                     
@@ -91,7 +93,7 @@
                 <span tal:replace="name" i18n:name="user_name" />'s dashboard
             </h1>
             
-            <dl tal:condition="view/empty"
+            <dl tal:condition="python:view.empty() and view.is_editable()"
                 class="portalMessage info visualClear" id="dashboard-info-message">
                 <dt i18n:translate="">Info</dt>
                 <dd i18n:translate="info_empty_dashboard">

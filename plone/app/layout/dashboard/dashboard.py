@@ -8,6 +8,7 @@ from plone.portlets.constants import USER_CATEGORY
 from plone.memoize.instance import memoize
 
 from Products.CMFCore.utils import getToolByName
+from Acquisition import aq_inner
 
 class DashboardView(BrowserView):
     """Power the dasbhard
@@ -25,3 +26,8 @@ class DashboardView(BrowserView):
         for dashboard in dashboards:
             num_portlets += len(dashboard.get(USER_CATEGORY, {}).get(userid, {}))
         return num_portlets == 0
+    
+    @memoize
+    def is_editable(self):
+        tool = getToolByName(self.context, "portal_membership")
+        return bool(tool.checkPermission('Portlets: Manage own portlets', aq_inner(self.context)))

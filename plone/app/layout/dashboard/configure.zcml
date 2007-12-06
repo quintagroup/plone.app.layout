@@ -7,7 +7,7 @@
     <browser:page
         for="Products.CMFCore.interfaces.ISiteRoot"
         name="dashboard"
-        permission="plone.app.portlets.ManageOwnPortlets"
+        permission="zope2.View"
         class=".dashboard.DashboardView"
         template="dashboard.pt"
         />
