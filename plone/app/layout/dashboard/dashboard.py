@@ -29,4 +29,4 @@ class DashboardView(BrowserView):
         return num_portlets == 0
     
     def list_columns(self):
-        return getUtility(IColumnManager, 'plone.dashboard').list_columns()
+        return getUtility(IColumnManager, 'plone.dashboard')
