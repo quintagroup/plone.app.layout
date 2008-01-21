@@ -104,14 +104,9 @@
             <div id="dashboard">
                 
                 <div class="visualClear"><!-- --></div>
-                <div id="dashboard-portlets1" 
-                  tal:content="structure provider:plone.dashboard1" />
-                <div id="dashboard-portlets2" 
-                  tal:content="structure provider:plone.dashboard2" />
-                <div id="dashboard-portlets3" 
-                  tal:content="structure provider:plone.dashboard3" />
-                <div id="dashboard-portlets4" 
-                  tal:content="structure provider:plone.dashboard4" />
+                <div tal:repeat="column view/list_columns" 
+                     tal:attributes="id string:${column}" 
+                  tal:content="structure string:provider:${column}" />
             </div>
             <div class="visualClear"><!-- --></div>
         </div>
