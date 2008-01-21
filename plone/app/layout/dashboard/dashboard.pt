@@ -105,8 +105,8 @@
                 
                 <div class="visualClear"><!-- --></div>
                 <div tal:repeat="column view/list_columns" 
-                     tal:attributes="id string:${column}" 
-                  tal:content="structure string:provider:${column}" />
+                     tal:attributes="id string:dashboard-portlets${repeat/column/number}" 
+                  tal:content="structure provider:${column}" />
             </div>
             <div class="visualClear"><!-- --></div>
         </div>
