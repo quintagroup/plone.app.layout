@@ -9,10 +9,11 @@
   </span>
 
   <tal:name tal:condition="view/creator">
-    <span class="documentAuthor"
+    <span class="documentAuthor vcard"
           i18n:translate="label_by_author">
       by
       <a href="#"
+         class="fn"
          tal:attributes="href string:${view/site_url}/author/${view/creator}"
          tal:content="view/authorname"
          tal:omit-tag="not:view/author"
