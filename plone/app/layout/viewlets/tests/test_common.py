@@ -8,11 +8,6 @@ class TestViewletBase(ViewletsTestCase):
     """
     Test the base class for the viewlets
     """
-    def afterSetUp(self):
-        pass
-#        addMember(self, 'Alan', roles=('Member', 'Manager'))
-#        addMember(self, 'Ano', roles=())
-
     def test_update(self):
         request = self.app.REQUEST
         self.setRoles(['Manager', 'Member'])
