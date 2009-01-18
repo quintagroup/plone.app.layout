@@ -1,21 +1,20 @@
+import logging
+
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 
-from zope.component import getMultiAdapter, queryMultiAdapter
 from plone.memoize.instance import memoize
-
-from plone.app.layout.viewlets import ViewletBase
+from zope.component import getMultiAdapter, queryMultiAdapter
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
-from Products.CMFEditions.Permissions import AccessPreviousVersions
-
-from Products.CMFPlone import PloneMessageFactory as _
-
 from Products.CMFCore.WorkflowCore import WorkflowException
+from Products.CMFEditions.Permissions import AccessPreviousVersions
 from Products.CMFPlone.utils import log
-import logging
+
+from plone.app.layout import PloneMessageFactory as _
+from plone.app.layout.viewlets import ViewletBase
 
 
 class DocumentActionsViewlet(ViewletBase):

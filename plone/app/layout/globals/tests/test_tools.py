@@ -1,7 +1,7 @@
 import unittest
 from plone.app.layout.globals.tests.base import GlobalsTestCase
 
-from Products.CMFPlone.utils import getToolByName
+from Products.CMFCore.utils import getToolByName
 
 class TestToolsView(GlobalsTestCase):
     """Ensure that the basic redirector setup is successful.

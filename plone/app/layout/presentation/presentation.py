@@ -3,9 +3,9 @@ from zope.i18n import translate
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
 
 from plone.memoize.view import memoize
+from plone.app.layout import PloneMessageFactory as _
 from plone.app.layout.viewlets.common import ViewletBase
 
 class PresentationView(BrowserView):
