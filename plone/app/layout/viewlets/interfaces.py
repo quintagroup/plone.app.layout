@@ -23,6 +23,11 @@ class IContentViews(IViewletManager):
     the content views (tabs) and associated actions.
     """
 
+class IContentEditViews(IViewletManager):
+    """A viewlet manager that sits above all content, normally used to hold
+    the content views (tabs) and associated actions.
+    """
+
 class IAboveContent(IViewletManager):
     """A viewlet manager that sits above the content area
     """

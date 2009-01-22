@@ -1,0 +1,3 @@
+<form tal:attributes="action string:${context/absolute_url}/edit;">
+  <input type="submit" name="edit" value="Edit" />
+</form>
