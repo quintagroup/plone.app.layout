@@ -4,6 +4,10 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Removed the global sections viewlet. It was already stripped down to the
+  point of being useless.
+  [hannosch]
+
 - Use our own PloneMessageFactory.
   [hannosch]
 

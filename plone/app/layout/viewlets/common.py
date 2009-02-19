@@ -141,10 +141,6 @@ class LogoViewlet(ViewletBase):
         self.portal_title = self.portal_state.portal_title()
 
 
-class GlobalSectionsViewlet(ViewletBase):
-    index = ViewPageTemplateFile('sections.pt')
-
-
 class PersonalBarViewlet(ViewletBase):
     index = ViewPageTemplateFile('personal_bar.pt')
 

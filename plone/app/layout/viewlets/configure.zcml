@@ -137,14 +137,6 @@
         permission="zope2.View" 
         />
 
-    <!-- The global sections -->
-    <browser:viewlet
-        name="plone.global_sections"
-        manager=".interfaces.IPortalHeader"
-        class=".common.GlobalSectionsViewlet"
-        permission="zope2.View" 
-        />
-
     <!-- The personal bar -->
     <browser:viewlet
         name="plone.personal_bar"
