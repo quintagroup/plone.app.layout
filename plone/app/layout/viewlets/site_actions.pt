@@ -3,14 +3,6 @@
     i18n:domain="plone"
     id="portal-siteactions">
 
-    <li id="siteaction-sitemap">
-      <a href="#"
-         tal:attributes="href string:${view/site_url}/sitemap"
-         title="Site Map"
-         i18n:attributes="title;"
-         i18n:translate="">Site Map</a>
-    </li>
-
     <li id="siteaction-contact">
       <a href="#"
          tal:attributes="href string:${view/site_url}/contact-info"
@@ -19,12 +11,12 @@
          i18n:translate="">Contact</a>
     </li>
 
-    <li id="siteaction-plone_setup"
-        tal:condition="view/controlpanel">
+    <li id="siteaction-sitemap">
       <a href="#"
-         tal:attributes="href string:${view/site_url}/@@overview-controlpanel"
-         title="Site Setup"
+         tal:attributes="href string:${view/site_url}/sitemap"
+         title="Site Map"
          i18n:attributes="title;"
-         i18n:translate="">Site Setup</a>
+         i18n:translate="">Site Map</a>
     </li>
+
 </ul>
