@@ -4,6 +4,10 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Renamed the personal bar into toolbar, since it does no longer contain only
+  personal tools.
+  [hannosch]
+
 - Moved the `site setup` action out of the public facing content of the site.
   [hannosch]
 

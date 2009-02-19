@@ -137,11 +137,11 @@
         permission="zope2.View" 
         />
 
-    <!-- The personal bar -->
+    <!-- The toolbar -->
     <browser:viewlet
-        name="plone.personal_bar"
+        name="plone.toolbar"
         manager=".interfaces.IPortalTop"
-        class=".common.PersonalBarViewlet"
+        class=".common.ToolbarViewlet"
         permission="zope2.View" 
         />
 

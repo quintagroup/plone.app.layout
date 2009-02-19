@@ -141,17 +141,17 @@ class LogoViewlet(ViewletBase):
         self.portal_title = self.portal_state.portal_title()
 
 
-class PersonalBarViewlet(ViewletBase):
-    index = ViewPageTemplateFile('personal_bar.pt')
+class ToolbarViewlet(ViewletBase):
+    index = ViewPageTemplateFile('toolbar.pt')
 
     def update(self):
-        super(PersonalBarViewlet, self).update()
+        super(ToolbarViewlet, self).update()
         context = aq_inner(self.context)
 
         context_state = getMultiAdapter((context, self.request),
                                         name=u'plone_context_state')
 
-        self.user_actions = context_state.actions('user')
+        self.user_actions = context_state.actions('toolbar')
         self.anonymous = self.portal_state.anonymous()
         self.available = self.user_actions or not self.anonymous
 

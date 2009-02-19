@@ -1,12 +1,12 @@
 <div xmlns="http://www.w3.org/1999/xhtml"
      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
      xmlns:tal="http://xml.zope.org/namespaces/tal"
-     id="portal-personaltools-wrapper"
+     id="portal-toolbar-wrapper"
      i18n:domain="plone">
 
-<h5 class="hiddenStructure" i18n:translate="heading_personal_tools">Personal tools</h5>
+<h5 class="hiddenStructure" i18n:translate="">Toolbar</h5>
 
-<ul id="portal-personaltools"
+<ul id="portal-toolbar"
     tal:condition="python:view.available"
     class="visualInline">
    <tal:block condition="not: view/anonymous">
