@@ -148,8 +148,8 @@ class TestContextStateView(GlobalsTestCase):
         self.assertEquals(self.dview.is_locked(), True)
 
     def test_actions(self):
-        actions = self.fview.actions('user')
-        self.failUnless(actions[0]['category'] == 'user')
+        actions = self.fview.actions('toolbar')
+        self.failUnless(actions[0]['category'] == 'toolbar')
     
 def test_suite():
     suite = unittest.TestSuite()
