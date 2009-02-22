@@ -1,8 +1,7 @@
 from zope.component import getMultiAdapter
 
 from plone.app.layout.viewlets import ViewletBase
-from plone.app.layout.nextprevious.interfaces import INextPreviousProvider
-from plone.memoize import view, instance
+from plone.navigation.interfaces import INextPreviousProvider
 
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile

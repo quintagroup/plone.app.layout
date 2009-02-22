@@ -4,6 +4,9 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Moved INextPreviousProvider interface into the plone.navigation package.
+  [hannosch]
+
 - Avoided most direct dependencies on the CMFPlone package.
   [hannosch]
 
