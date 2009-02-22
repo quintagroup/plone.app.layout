@@ -1,14 +1,17 @@
 # This module contains a function to help build navigation-tree-like structures
 # from catalog queries.
 
+from types import StringType
+
 from zope.component import getMultiAdapter
 from zope.interface import implements
 
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 
-from types import StringType
-
 from plone.app.layout.navigation.interfaces import INavtreeStrategy
+
 
 class NavtreeStrategyBase(object):
     """Basic navigation tree strategy that does nothing.
@@ -121,7 +124,8 @@ def buildFolderTree(context, obj=None, query={}, strategy=NavtreeStrategyBase())
     objPhysicalPath = None
     if obj is not None:
         objPhysicalPath = obj.getPhysicalPath()
-        view = getMultiAdapter((obj, request), name='default_page')
+        parent = aq_parent(aq_inner(obj))
+        view = getMultiAdapter((parent, request), name='default_page')
         if view.isDefaultPage(obj):
             objPhysicalPath = objPhysicalPath[:-1]
         objPath = '/'.join(objPhysicalPath)
