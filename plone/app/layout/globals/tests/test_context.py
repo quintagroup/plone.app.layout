@@ -1,8 +1,8 @@
 import unittest
 from plone.app.layout.globals.tests.base import GlobalsTestCase
 
+from plone.navigation.interfaces import INonStructuralFolder
 from zope.interface import directlyProvides
-from Products.CMFPlone.interfaces import INonStructuralFolder
 
 from plone.locking.interfaces import ILockable
 

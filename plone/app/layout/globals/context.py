@@ -4,6 +4,7 @@ from zope.component import queryAdapter
 from zope.component import queryMultiAdapter
 from zope.component import getUtility
 from plone.memoize.view import memoize
+from plone.navigation.interfaces import INonStructuralFolder
 
 from Acquisition import aq_base, aq_inner, aq_parent
 from DateTime import DateTime
@@ -11,12 +12,8 @@ from Products.Five.browser import BrowserView
 
 from Products.CMFCore.interfaces import IActionProvider
 from Products.CMFCore.interfaces import ISiteRoot
-from Products.CMFPlone.interfaces import IBrowserDefault
-from Products.CMFPlone.interfaces import INonStructuralFolder
-from Products.CMFPlone.utils import base_hasattr
-from Products.CMFPlone.utils import safe_callable
-
 from Products.CMFCore.utils import getToolByName
+from Products.CMFDynamicViewFTI.interface import IBrowserDefault
 from Products.CMFPlone import utils
 
 from interfaces import IContextState
@@ -163,15 +160,16 @@ class ContextState(BrowserView):
         # convert to a DateTime
 
         # Try DC accessor first
-        if base_hasattr(content, 'ExpirationDate'):
+        if getattr(aq_base(content), 'ExpirationDate', None) is not None:
             expiry = content.ExpirationDate
 
         # Try the direct way
-        if not expiry and base_hasattr(content, 'expires'):
+        if (not expiry and
+            getattr(aq_base(content), 'expires', None) is not None):
             expiry = content.expires
 
         # See if we have a callable
-        if safe_callable(expiry):
+        if callable(expiry):
             expiry = expiry()
 
         # Convert to DateTime if necessary, ExpirationDate may return 'None'

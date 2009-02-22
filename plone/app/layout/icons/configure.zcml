@@ -22,7 +22,7 @@
 
   <adapter for="*
                 zope.publisher.interfaces.browser.IBrowserRequest
-                Products.CMFPlone.interfaces.IPloneSiteRoot"
+                Products.CMFCore.interfaces.ISiteRoot"
            factory=".icons.PloneSiteContentIcon"
            provides=".interfaces.IContentIcon" />
 

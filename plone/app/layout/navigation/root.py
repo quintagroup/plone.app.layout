@@ -1,9 +1,11 @@
 from Acquisition import aq_base
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import utils
+
 
 def getNavigationRoot(context, relativeRoot=None):
     """Get the path to the root of the navigation tree. If context or one of
@@ -25,7 +27,7 @@ def getNavigationRoot(context, relativeRoot=None):
     portal = portal_url.getPortalObject()
     obj = context
     while not INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
-        obj = utils.parent(obj)
+        obj = aq_parent(aq_inner(obj))
     if INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
         return '/'.join(obj.getPhysicalPath())
 

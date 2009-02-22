@@ -4,6 +4,9 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Avoided most direct dependencies on the CMFPlone package.
+  [hannosch]
+
 - Adjusted a test that still relied on the user category name.
   [hannosch]
 

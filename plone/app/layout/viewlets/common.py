@@ -9,11 +9,11 @@ from zope.deprecation.deprecation import deprecate
 from AccessControl import getSecurityManager
 from Acquisition import aq_base, aq_inner
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.app.layout.globals.interfaces import IViewView
+from plone.app.layout.utils import safe_unicode
 
 
 def get_language(context, request):

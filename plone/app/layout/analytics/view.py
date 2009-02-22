@@ -3,7 +3,9 @@ from zope.viewlet.interfaces import IViewlet
 
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
+
+from plone.app.layout.utils import safe_unicode
+
 
 class AnalyticsViewlet(BrowserView):
     implements(IViewlet)

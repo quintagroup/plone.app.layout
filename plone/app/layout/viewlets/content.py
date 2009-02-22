@@ -11,10 +11,11 @@ from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFEditions.Permissions import AccessPreviousVersions
-from Products.CMFPlone.utils import log
 
 from plone.app.layout import PloneMessageFactory as _
 from plone.app.layout.viewlets import ViewletBase
+
+logger = logging.getLogger('plone.app.layout')
 
 
 class DocumentActionsViewlet(ViewletBase):
@@ -143,8 +144,9 @@ class WorkflowHistoryViewlet(ViewletBase):
                 review_history.reverse()
 
             except WorkflowException:
-                log( 'plone.app.layout.viewlets.content: '
-                     '%s has no associated workflow' % self.context.absolute_url(), severity=logging.DEBUG)
+                logger.log('viewlets.content: %s has no associated '
+                           'workflow' % self.context.absolute_url(),
+                           severity=logging.DEBUG)
 
         return review_history
 
