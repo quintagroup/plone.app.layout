@@ -10,7 +10,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFEditions.Permissions import AccessPreviousVersions
 
 from plone.app.layout import PloneMessageFactory as _
 from plone.app.layout.viewlets import ViewletBase
@@ -172,6 +171,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
 
     @memoize
     def revisionHistory(self):
+        from Products.CMFEditions.Permissions import AccessPreviousVersions
         context = aq_inner(self.context)
         rt = getToolByName(context, "portal_repository")
         allowed = _checkPermission(AccessPreviousVersions, context)
