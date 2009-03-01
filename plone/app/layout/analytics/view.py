@@ -1,7 +1,7 @@
 from zope.interface import implements
+from zope.publisher.browser import BrowserView
 from zope.viewlet.interfaces import IViewlet
 
-from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.layout.utils import safe_unicode
@@ -11,8 +11,6 @@ class AnalyticsViewlet(BrowserView):
     implements(IViewlet)
 
     def __init__(self, context, request, view, manager):
-        super(AnalyticsViewlet, self).__init__(context, request)
-        self.__parent__ = view
         self.context = context
         self.request = request
         self.view = view

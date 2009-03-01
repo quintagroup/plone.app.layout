@@ -4,6 +4,9 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Use the BrowserView class directly from zope.publisher.
+  [hannosch]
+
 - Adjust to singular category argument for the actions tool and remove
   hack-ish blacklists from actions handling.
   [hannosch]

@@ -2,13 +2,13 @@ import warnings
 from zope.component import queryAdapter
 from zope.component import queryUtility
 from zope.interface import implements
+from zope.publisher.browser import BrowserView
 
-from Acquisition import aq_inner, aq_base
+from Acquisition import aq_base
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFDynamicViewFTI.interface import IBrowserDefault
 from Products.CMFDynamicViewFTI.interface import IDynamicViewTypeInformation
 from Products.CMFPlone import utils
-from Products.Five.browser import BrowserView
 
 from plone.app.layout.navigation.interfaces import IDefaultPage
 
@@ -21,7 +21,7 @@ class DefaultPage(BrowserView):
                           "implemented and will be removed in Plone 4.",
                           DeprecationWarning, 1)
 
-        return isDefaultPage(aq_inner(self.context), obj)
+        return isDefaultPage(self.context, obj)
 
 
     def getDefaultPage(self, context_=None):
@@ -30,7 +30,7 @@ class DefaultPage(BrowserView):
                           "never implemented and will be removed in Plone 4.",
                           DeprecationWarning, 1)
 
-        return getDefaultPage(aq_inner(self.context))
+        return getDefaultPage(self.context)
 
 
 def isDefaultPage(container, obj):

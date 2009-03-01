@@ -1,4 +1,4 @@
-from Products.Five.browser import BrowserView
+from zope.publisher.browser import BrowserView
 
 class LoginAlias(BrowserView):
     """Base class for views that perform a redirect

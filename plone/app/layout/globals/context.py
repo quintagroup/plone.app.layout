@@ -3,12 +3,12 @@ from zope.component import getMultiAdapter
 from zope.component import queryAdapter
 from zope.component import queryMultiAdapter
 from zope.component import getUtility
+from zope.publisher.browser import BrowserView
 from plone.memoize.view import memoize
 from plone.navigation.interfaces import INonStructuralFolder
 
-from Acquisition import aq_base, aq_inner, aq_parent
+from Acquisition import aq_base, aq_parent
 from DateTime import DateTime
-from Products.Five.browser import BrowserView
 
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
@@ -51,7 +51,7 @@ class ContextState(BrowserView):
 
     @memoize
     def canonical_object(self):
-        context = aq_inner(self.context)
+        context = self.context
         if self.is_default_page():
             return aq_parent(context)
         else:
@@ -81,7 +81,7 @@ class ContextState(BrowserView):
 
     @memoize
     def view_template_id(self):
-        context = aq_inner(self.context)
+        context = self.context
 
         if IBrowserDefault.providedBy(context):
             browserDefault = context
@@ -125,24 +125,24 @@ class ContextState(BrowserView):
 
     @memoize
     def object_url(self):
-        return aq_inner(self.context).absolute_url()
+        return self.context.absolute_url()
 
     @memoize
     def object_title(self):
-        context = aq_inner(self.context)
+        context = self.context
         return utils.pretty_title_or_id(context, context)
 
     @memoize
     def workflow_state(self):
         tool = getToolByName(self.context, "portal_workflow")
-        return tool.getInfoFor(aq_inner(self.context), 'review_state', None)
+        return tool.getInfoFor(self.context, 'review_state', None)
 
     def parent(self):
-        return aq_parent(aq_inner(self.context))
+        return aq_parent(self.context)
 
     @memoize
     def folder(self):
-        context = aq_inner(self.context)
+        context = self.context
         if self.is_structural_folder() and not self.is_default_page():
             return context
         else:
@@ -180,22 +180,21 @@ class ContextState(BrowserView):
 
     @memoize
     def is_folderish(self):
-        return bool(getattr(aq_base(aq_inner(self.context)), 'isPrincipiaFolderish', False))
+        return bool(getattr(aq_base(self.context), 'isPrincipiaFolderish', False))
             
     @memoize
     def is_structural_folder(self):
         folderish = self.is_folderish()
-        context = aq_inner(self.context)
         if not folderish:
             return False
-        elif INonStructuralFolder.providedBy(context):
+        elif INonStructuralFolder.providedBy(self.context):
             return False
         else:
             return folderish
         
     @memoize
     def is_default_page(self):
-        context = aq_inner(self.context)
+        context = self.context
         container = aq_parent(context)
         if not container:
             return False
@@ -204,7 +203,7 @@ class ContextState(BrowserView):
     
     @memoize
     def is_portal_root(self):
-        context = aq_inner(self.context)
+        context = self.context
         portal = getUtility(ISiteRoot)
         return aq_base(context) is aq_base(portal) or \
             (self.is_default_page() and
@@ -213,7 +212,7 @@ class ContextState(BrowserView):
     @memoize
     def is_editable(self):
         tool = getToolByName(self.context, "portal_membership")
-        return bool(tool.checkPermission('Modify portal content', aq_inner(self.context)))
+        return bool(tool.checkPermission('Modify portal content', self.context))
     
     @memoize
     def is_locked(self):
@@ -223,13 +222,13 @@ class ContextState(BrowserView):
         if lock_info is not None:
             return lock_info.is_locked_for_current_user()
         else:
-            context = aq_inner(self.context)
+            context = self.context
             lockable = getattr(context.aq_explicit, 'wl_isLocked', None) is not None
             return lockable and context.wl_isLocked()
 
     @memoize
     def actions(self, category, max=-1):
-        context = aq_inner(self.context)
+        context = self.context
         tool = getToolByName(context, "portal_actions")
         return tool.listActionInfos(
             object=context,
@@ -242,7 +241,7 @@ class ContextState(BrowserView):
         
     # Helper methods
     def _lookupTypeActionTemplate(self, actionId):
-        context = aq_inner(self.context)
+        context = self.context
         fti = context.getTypeInfo()
         try:
             # XXX: This isn't quite right since it assumes the action starts with ${object_url}

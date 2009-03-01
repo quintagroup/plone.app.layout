@@ -1,4 +1,6 @@
-from Products.Five import BrowserView
+from plone.memoize import ram
+from zope.publisher.browser import BrowserView
+
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from ZPublisher import NotFound
@@ -6,7 +8,6 @@ from ZPublisher import NotFound
 from gzip import GzipFile
 from cStringIO import StringIO
 
-from plone.memoize import ram
 
 def _render_cachekey(fun, self):
     # Cache by filename
@@ -27,11 +28,7 @@ class SiteMapView(BrowserView):
     """
 
     template = ViewPageTemplateFile('sitemap.xml')
-
-    def __init__(self, context, request):
-        self.context = context
-        self.request = request
-        self.filename = 'sitemap.xml.gz'
+    filename = 'sitemap.xml.gz'
 
     def objects(self):
         """Returns the data to create the sitemap."""

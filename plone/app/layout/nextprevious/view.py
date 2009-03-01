@@ -1,11 +1,10 @@
 from zope.component import getMultiAdapter
-
+from zope.publisher.browser import BrowserView
 from plone.app.layout.viewlets import ViewletBase
 from plone.navigation.interfaces import INextPreviousProvider
 
-from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from Acquisition import aq_inner, aq_parent
+from Acquisition import aq_parent
 
 
 class NextPreviousView(BrowserView):
@@ -16,13 +15,13 @@ class NextPreviousView(BrowserView):
         provider = self._provider()
         if provider is None:
             return None
-        return provider.getNextItem(aq_inner(self.context))
+        return provider.getNextItem(self.context)
     
     def previous(self):
         provider = self._provider()
         if provider is None:
             return None
-        return provider.getPreviousItem(aq_inner(self.context))
+        return provider.getPreviousItem(self.context)
 
     def enabled(self):
         provider = self._provider()
@@ -33,7 +32,7 @@ class NextPreviousView(BrowserView):
     def _provider(self):
         # Note - the next/previous provider is the container of this object!
         # This may not support next/previous navigation, so code defensively
-        return INextPreviousProvider(aq_parent(aq_inner(self.context)), None)
+        return INextPreviousProvider(aq_parent(self.context), None)
 
     def isViewTemplate(self):
         plone = getMultiAdapter((self.context, self.request), name=u'plone_context_state')

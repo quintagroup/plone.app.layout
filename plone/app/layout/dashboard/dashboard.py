@@ -1,14 +1,13 @@
 from zope.component import getUtility
 from zope.i18n import translate
+from zope.publisher.browser import BrowserView
 
-from Products.Five.browser import BrowserView
-
+from plone.memoize.instance import memoize
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.constants import USER_CATEGORY
 
-from plone.memoize.instance import memoize
-
 from Products.CMFCore.utils import getToolByName
+
 
 class DashboardView(BrowserView):
     """Power the dasbhard

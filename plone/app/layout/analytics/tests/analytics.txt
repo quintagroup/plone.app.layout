@@ -1,7 +1,7 @@
 We need a view on the content.
 
     >>> request = self.app.REQUEST
-    >>> from Products.Five.browser import BrowserView
+    >>> from zope.publisher.browser import BrowserView
     >>> view = BrowserView(self.portal, request)
 
     >>> from plone.app.layout.viewlets.interfaces import IPortalFooter

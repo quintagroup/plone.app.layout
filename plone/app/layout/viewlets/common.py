@@ -3,13 +3,13 @@ from urllib import quote_plus
 
 from zope.interface import implements, alsoProvides
 from zope.component import getMultiAdapter
-from zope.viewlet.interfaces import IViewlet
 from zope.deprecation.deprecation import deprecate
+from zope.publisher.browser import BrowserView
+from zope.viewlet.interfaces import IViewlet
 
 from AccessControl import getSecurityManager
-from Acquisition import aq_base, aq_inner
+from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.app.layout.globals.interfaces import IViewView
@@ -28,8 +28,6 @@ class ViewletBase(BrowserView):
     implements(IViewlet)
 
     def __init__(self, context, request, view, manager=None):
-        super(ViewletBase, self).__init__(context, request)
-        self.__parent__ = view
         self.context = context
         self.request = request
         self.view = view
@@ -146,7 +144,7 @@ class ToolbarViewlet(ViewletBase):
 
     def update(self):
         super(ToolbarViewlet, self).update()
-        context = aq_inner(self.context)
+        context = self.context
 
         context_state = getMultiAdapter((context, self.request),
                                         name=u'plone_context_state')
@@ -196,8 +194,7 @@ class PathBarViewlet(ViewletBase):
 
     @property
     def breadcrumbs(self):
-        context = aq_inner(self.context)
-        breadcrumbs_view = getMultiAdapter((context, self.request),
+        breadcrumbs_view = getMultiAdapter((self.context, self.request),
                                            name='breadcrumbs_view')
         return breadcrumbs_view.breadcrumbs()
 
@@ -206,8 +203,7 @@ class ContentActionsViewlet(ViewletBase):
     index = ViewPageTemplateFile('contentactions.pt')
     
     def update(self):
-        context = aq_inner(self.context)
-        context_state = getMultiAdapter((context, self.request),
+        context_state = getMultiAdapter((self.context, self.request),
                                         name=u'plone_context_state')
 
         self.object_actions = context_state.actions('object_actions')

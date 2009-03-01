@@ -1,10 +1,9 @@
 from zope.interface import Interface, implements
 from zope.dottedname.resolve import resolve
-
+from zope.publisher.browser import BrowserView
 from plone.memoize.view import memoize
 
 from Acquisition import aq_base
-from Products.Five.browser import BrowserView
 
 from interfaces import IInterfaceInformation
 

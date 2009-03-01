@@ -1,12 +1,8 @@
 from zope.interface import implements
-from zope.i18n.interfaces import IUserPreferredLanguages
-from zope.i18n.locales import locales, LoadLocaleError
+from zope.publisher.browser import BrowserView
+from plone.memoize.view import memoize_contextless
 
-from plone.memoize.view import memoize, memoize_contextless
-
-from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
 
 from plone.app.layout.navigation.root import getNavigationRoot
 
@@ -19,9 +15,8 @@ class PortalState(BrowserView):
 
     @memoize_contextless
     def portal(self):
-        context = aq_inner(self.context)
-        return getToolByName(context, 'portal_url').getPortalObject()
-    
+        return getToolByName(self.context, 'portal_url').getPortalObject()
+
     @memoize_contextless
     def portal_title(self):
         return self.portal().Title()
@@ -32,7 +27,7 @@ class PortalState(BrowserView):
         
     @memoize_contextless
     def navigation_root_path(self):
-        return getNavigationRoot(aq_inner(self.context))
+        return getNavigationRoot(self.context)
     
     @memoize_contextless
     def navigation_root_url(self):
@@ -41,13 +36,12 @@ class PortalState(BrowserView):
     
     @memoize_contextless
     def default_language(self):
-        context = aq_inner(self.context)
-        site_properties = getToolByName(context, "portal_properties").site_properties
+        site_properties = getToolByName(self.context, "portal_properties").site_properties
         return site_properties.getProperty('default_language', None)
 
     def language(self):
         return self.request.get('LANGUAGE', None) or \
-                aq_inner(self.context).Language() or self.default_language()
+                self.context.Language() or self.default_language()
 
     def locale(self):
         return self.request.locale
@@ -67,19 +61,17 @@ class PortalState(BrowserView):
 
     @memoize_contextless
     def member(self):
-        context = aq_inner(self.context)
-        tool = getToolByName(context, "portal_membership")
+        tool = getToolByName(self.context, "portal_membership")
         return tool.getAuthenticatedMember()
 
     @memoize_contextless
     def anonymous(self):
-        context = aq_inner(self.context)
-        tool = getToolByName(context, "portal_membership")
+        tool = getToolByName(self.context, "portal_membership")
         return bool(tool.isAnonymousUser())
 
     @memoize_contextless
     def friendly_types(self):
-        context = aq_inner(self.context)
+        context = self.context
         site_properties = getToolByName(context, "portal_properties").site_properties
         not_searched = site_properties.getProperty('types_not_searched', [])
 
