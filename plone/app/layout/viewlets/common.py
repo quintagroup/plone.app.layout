@@ -132,10 +132,6 @@ class LogoViewlet(ViewletBase):
         super(LogoViewlet, self).update()
 
         self.navigation_root_url = self.portal_state.navigation_root_url()
-
-        portal = self.portal_state.portal()
-        self.logo_tag = portal.restrictedTraverse('logo.jpg').tag()
-
         self.portal_title = self.portal_state.portal_title()
 
 

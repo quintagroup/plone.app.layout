@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.2'
+version = '2.0'
 
 setup(name='plone.app.layout',
       version=version,
@@ -34,7 +34,7 @@ setup(name='plone.app.layout',
       ),
       install_requires=[
         'setuptools',
-        'plone.app.viewletmanager>=1.2',
+        'plone.app.viewletmanager',
         'plone.memoize',
         'plone.navigation',
         'plone.portlets',
