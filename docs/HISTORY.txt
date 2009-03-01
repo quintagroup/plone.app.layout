@@ -4,6 +4,10 @@ Changelog
 2.0 - Unreleased
 ----------------
 
+- Added `plone.status` viewlet manager and a viewlet showing the status
+  messages. Retired global_statusmessage template.
+  [hannosch]
+
 - Protect against missing images in toolbar and logo viewlet.
   [hannosch]
 

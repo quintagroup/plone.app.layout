@@ -23,6 +23,10 @@ class IContentViews(IViewletManager):
     the content views (tabs) and associated actions.
     """
 
+class IStatusMessage(IViewletManager):
+    """A viewlet manager that shows the status messages
+    """
+
 class IAboveContent(IViewletManager):
     """A viewlet manager that sits above the content area
     """

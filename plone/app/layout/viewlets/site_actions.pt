@@ -1,6 +1,4 @@
-<ul xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    xmlns:tal="http://xml.zope.org/namespaces/tal"
-    i18n:domain="plone"
+<ul i18n:domain="plone"
     id="portal-siteactions">
 
     <li id="siteaction-contact">

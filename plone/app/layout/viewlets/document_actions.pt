@@ -1,8 +1,4 @@
-<div xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-     xmlns:tal="http://xml.zope.org/namespaces/tal"
-     tal:omit-tag=""
-     i18n:domain="plone">
+<tal:actions i18n:domain="plone">
 
     <div class="visualClear"><!-- --></div>
 
@@ -28,4 +24,4 @@
         <div tal:replace="structure provider:plone.documentactions" />
 
     </div>
-</div>
+</tal:actions>

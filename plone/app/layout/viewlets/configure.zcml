@@ -40,6 +40,13 @@
         />
 
     <browser:viewletManager
+        name="plone.status"
+        provides=".interfaces.IStatusMessage"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        />
+
+    <browser:viewletManager
         name="plone.abovecontent"
         provides=".interfaces.IAboveContent"
         permission="zope2.View"
@@ -259,5 +266,14 @@
         class=".common.ColophonViewlet"
         permission="zope.Public"
         />
+
+    <!-- Render the status message -->
+    <browser:viewlet
+        name="plone.status.message"
+        manager=".interfaces.IStatusMessage"
+        class=".status.StatusMessageViewlet"
+        permission="zope2.View" 
+        />
+
 
 </configure>
