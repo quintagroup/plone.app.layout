@@ -28,7 +28,41 @@ class DocumentActionsViewlet(ViewletBase):
     index = ViewPageTemplateFile("document_actions.pt")
 
 
+class ContentViewsViewlet(ViewletBase):
+
+    def update(self):
+        super(ContentViewsViewlet, self).update()
+
+        ploneview = getMultiAdapter(
+            (self.context, self.request), name=u'plone')
+        self.enabled = ploneview.showEditableBorder()
+
+    def view_actions(self):
+        context = aq_inner(self.context)
+        types_tool = getToolByName(context, "portal_types")
+        context_state = getMultiAdapter((context, self.request),
+            name=u'plone_context_state')
+        actions = context_state.actions
+
+        action_list = []
+        if context_state.is_structural_folder():
+            action_list.extend(actions('folder'))
+            action_list.extend(types_tool.listActionInfos(
+                object=context,
+                category='folder',
+                ))
+        action_list.extend(actions('object'))
+        action_list.extend(types_tool.listActionInfos(
+            object=context,
+            category='object',
+            ))
+        return action_list
+
+    index = ViewPageTemplateFile("contentviews.pt")
+
+
 class DocumentBylineViewlet(ViewletBase):
+
     def update(self):
         super(DocumentBylineViewlet, self).update()
         self.context_state = getMultiAdapter((self.context, self.request),

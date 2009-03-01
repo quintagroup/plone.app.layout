@@ -4,6 +4,10 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Adjust to singular category argument for the actions tool and remove
+  hack-ish blacklists from actions handling.
+  [hannosch]
+
 - Moved INextPreviousProvider interface into the plone.navigation package.
   [hannosch]
 

@@ -10,7 +10,6 @@ from Acquisition import aq_base, aq_inner, aq_parent
 from DateTime import DateTime
 from Products.Five.browser import BrowserView
 
-from Products.CMFCore.interfaces import IActionProvider
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFDynamicViewFTI.interface import IBrowserDefault
@@ -20,7 +19,6 @@ from interfaces import IContextState
 
 from plone.portlets.interfaces import ILocalPortletAssignable
 
-BLACKLISTED_PROVIDERS = ('portal_workflow', )
 BLACKLISTED_CATEGORIES = (
     'folder_buttons',
     'object_buttons',
@@ -230,39 +228,14 @@ class ContextState(BrowserView):
             return lockable and context.wl_isLocked()
 
     @memoize
-    def actions(self, category=None, max=-1):
+    def actions(self, category, max=-1):
         context = aq_inner(self.context)
         tool = getToolByName(context, "portal_actions")
-        if category is None:
-            actions = tool.listFilteredActionsFor(
-                context,
-               ignore_providers=BLACKLISTED_PROVIDERS,
-               ignore_categories=BLACKLISTED_CATEGORIES)
-        else:
-            actions = []
-            providers = [name for name in tool.listActionProviders()
-                              if name not in BLACKLISTED_PROVIDERS]
-
-            # Include actions from specific tools.
-            for provider_name in providers:
-                provider = getattr(tool, provider_name, None)
-                # Skip missing action providers.
-                if provider is None:
-                    continue
-                if IActionProvider.providedBy(provider):
-                    if provider_name in ('portal_actions', 'portal_types'):
-                        actions.extend(
-                            provider.listActionInfos(
-                                object=context,
-                                categories=(category, ),
-                                max=max,
-                                )
-                            )
-                    else:
-                        actions.extend(
-                            provider.listActionInfos(object=context))
-
-        return actions
+        return tool.listActionInfos(
+            object=context,
+            category=category,
+            max=max,
+            )
 
     def portlet_assignable(self):
         return ILocalPortletAssignable.providedBy(self.context)

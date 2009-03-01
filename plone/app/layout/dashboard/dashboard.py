@@ -16,8 +16,8 @@ class DashboardView(BrowserView):
 
     def actions(self):
         portal_actions = getToolByName(self.context, 'portal_actions')
-        categories = 'controlpanel/controlpanel_user'
-        actions = portal_actions.listActionInfos(categories=categories)
+        category = 'controlpanel/controlpanel_user'
+        actions = portal_actions.listActionInfos(category=category)
         def _title(v):
             return translate(v.get('title'),
                              domain='plone',
