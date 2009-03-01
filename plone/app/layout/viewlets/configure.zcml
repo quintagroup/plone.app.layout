@@ -206,6 +206,15 @@
         permission="zope2.View" 
         />
 
+    <!-- Render the keywords -->
+    <browser:viewlet
+        name="plone.htmlhead.dckeywords"
+        for="Products.CMFCore.interfaces.IDublinCore"
+        manager=".interfaces.IHtmlHead"
+        class=".dckeywords.DCKeywordViewlet"
+        permission="zope2.View" 
+        />
+
     <!-- Render the document actions -->
     <browser:viewlet
         name="plone.abovecontenttitle.documentactions"

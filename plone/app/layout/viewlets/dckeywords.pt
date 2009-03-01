@@ -1,0 +1,7 @@
+<tal:condition
+    tal:define="metatags view/listMetaTags"
+    tal:condition="metatags">
+<meta tal:repeat="keyval metatags"
+      tal:attributes="name python:keyval[0];
+                      content python:keyval[1];" />
+</tal:condition>

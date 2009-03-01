@@ -4,6 +4,10 @@ Changelog
 2.0 - Unreleased
 ----------------
 
+- Added `plone.htmlhead.dckeywords` viewlet, which took over the job from a
+  hardcoded section of main_template.
+  [hannosch]
+
 - Added `plone.status` viewlet manager and a viewlet showing the status
   messages. Retired global_statusmessage template.
   [hannosch]
