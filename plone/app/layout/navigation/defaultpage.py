@@ -23,7 +23,6 @@ class DefaultPage(BrowserView):
 
         return isDefaultPage(self.context, obj)
 
-
     def getDefaultPage(self, context_=None):
         if context_ is not None:
             warnings.warn("The context_ parameter for getDefaultPage was "
