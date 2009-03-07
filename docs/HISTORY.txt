@@ -48,6 +48,22 @@ Changelog
 - Specified package dependencies.
   [hannosch]
 
+
+1.1.8 - 2009-03-07
+------------------
+
+- Default to using the content history viewlet instead of the workflow history
+  viewlet.
+  [wichert]
+
+- Add options to show differences between consecutive versions, and revert to
+  and preview older revisions to the content history viewlet.
+  [wichert]
+
+- Use the new history view from CMFEditions instead of the crufty old form.
+  [wichert]
+
+
 1.1.8 - 2009-03-07
 ------------------
 
