@@ -49,7 +49,7 @@ Changelog
   [hannosch]
 
 
-1.1.8 - 2009-03-07
+1.2b1 - 2009-03-07
 ------------------
 
 - Default to using the content history viewlet instead of the workflow history

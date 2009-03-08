@@ -7,10 +7,8 @@ from plone.memoize.instance import memoize
 from zope.component import getMultiAdapter, queryMultiAdapter
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFEditions.Permissions import AccessPreviousVersions
 
 from plone.app.layout import PloneMessageFactory as _
 from plone.app.layout.viewlets import ViewletBase
@@ -137,17 +135,20 @@ class WorkflowHistoryViewlet(ViewletBase):
 
         Taken from plone_scripts/getWorkflowHistory.py
         """
-        workflow = getToolByName(self.context, 'portal_workflow')
-        membership = getToolByName(self.context, 'portal_membership')
+        context = self.context
+        sm = getSecurityManager()
 
         review_history = []
-
         # check if the current user has the proper permissions
-        if (membership.checkPermission('Request review', self.context) or
-            membership.checkPermission('Review portal content', self.context)):
+        if (sm.checkPermission('Request review', context) or
+            sm.checkPermission('Review portal content', context)):
+
+            workflow = getToolByName(context, 'portal_workflow')
+            membership = getToolByName(context, 'portal_membership')
+
             try:
                 # get total history
-                review_history = workflow.getInfoFor(self.context, 'review_history')
+                review_history = workflow.getInfoFor(context, 'review_history')
 
                 if not complete:
                     # filter out automatic transitions.
@@ -157,8 +158,8 @@ class WorkflowHistoryViewlet(ViewletBase):
 
                 for r in review_history:
                     r['type'] = 'workflow'
-                    r['transition_title'] = workflow.getTitleForTransitionOnType(r['action'],
-                                                                                 self.context.portal_type)
+                    r['transition_title'] = workflow.getTitleForTransitionOnType(
+                        r['action'], context.portal_type)
                     actorid = r['actor']
                     r['actorid'] = actorid
                     if actorid is None:
@@ -179,7 +180,7 @@ class WorkflowHistoryViewlet(ViewletBase):
 
             except WorkflowException:
                 logger.log('viewlets.content: %s has no associated '
-                           'workflow' % self.context.absolute_url(),
+                           'workflow' % context.absolute_url(),
                            severity=logging.DEBUG)
 
         return review_history
@@ -208,7 +209,8 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
     def revisionHistory(self):
         context = aq_inner(self.context)
         rt = getToolByName(context, "portal_repository")
-        allowed = _checkPermission(AccessPreviousVersions, context)
+        allowed = getSecurityManager().checkPermission(
+            'CMFEditions: Access previous versions', context)
         if not allowed:
             return []
         context_url = context.absolute_url()
