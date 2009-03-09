@@ -10,7 +10,7 @@ from Products.CMFCore.utils import getToolByName
 
 
 class DashboardView(BrowserView):
-    """Power the dasbhard
+    """Power the dashboard
     """
 
     def actions(self):

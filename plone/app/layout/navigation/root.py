@@ -25,9 +25,7 @@ def getNavigationRoot(context, relativeRoot=None):
         relativeRoot = navtree_properties.getProperty('root', None)
 
     portal = portal_url.getPortalObject()
-    obj = context
-    while not INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
-        obj = aq_parent(aq_inner(obj))
+    obj = getNavigationRootObject(context, portal)
     if INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
         return '/'.join(obj.getPhysicalPath())
 
@@ -65,3 +63,9 @@ def getNavigationRoot(context, relativeRoot=None):
     # Fall back on the portal root
     if not rootPath:
         return portalPath
+
+def getNavigationRootObject(context, portal):
+    obj = context
+    while not INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
+        obj = aq_parent(aq_inner(obj))
+    return obj

@@ -38,12 +38,12 @@ class ViewletBase(BrowserView):
     def portal_url(self):
         return self.site_url
 
-
     def update(self):
         self.portal_state = getMultiAdapter((self.context, self.request),
                                             name=u'plone_portal_state')
         self.site_url = self.portal_state.portal_url()
-
+        self.navigation_root_url = self.portal_state.navigation_root_url()
+        
     def render(self):
         # defer to index method, because that's what gets overridden by the template ZCML attribute
         return self.index()
@@ -130,8 +130,6 @@ class LogoViewlet(ViewletBase):
 
     def update(self):
         super(LogoViewlet, self).update()
-
-        self.navigation_root_url = self.portal_state.navigation_root_url()
         self.portal_title = self.portal_state.portal_title()
 
 
@@ -155,7 +153,7 @@ class ToolbarViewlet(ViewletBase):
 
             sm = getSecurityManager()
             if sm.checkPermission('Portlets: Manage own portlets', context):
-                self.homelink_url = self.site_url + '/dashboard'
+                self.homelink_url = self.portal_state.navigation_root_url() + '/dashboard'
             else:
                 if userid.startswith('http:') or userid.startswith('https:'):
                     self.homelink_url = self.site_url + '/author/?author=' + userid
@@ -179,10 +177,6 @@ class ToolbarViewlet(ViewletBase):
 class PathBarViewlet(ViewletBase):
 
     render = ViewPageTemplateFile('path_bar.pt')
-
-    @property
-    def navigation_root_url(self):
-        return self.portal_state.navigation_root_url()
 
     @property
     def is_rtl(self):
