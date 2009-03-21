@@ -1,8 +1,10 @@
 import unittest
 from plone.app.layout.globals.tests.base import GlobalsTestCase
-
 from plone.app.layout.navigation.root import getNavigationRoot
 from zope.i18n.locales import locales
+
+from Products.CMFCore.utils import getToolByName
+
 
 class TestPortalStateView(GlobalsTestCase):
     """Ensure that the basic redirector setup is successful.
@@ -29,7 +31,7 @@ class TestPortalStateView(GlobalsTestCase):
         self.assertEquals(self.view.navigation_root_url(), url)
 
     def test_default_language(self):
-        self.portal.portal_properties.site_properties.default_language = 'no'
+        getToolByName(self.portal, 'portal_properties').site_properties.default_language = 'no'
         self.assertEquals(self.view.default_language(), 'no')
 
     def test_language(self):
@@ -59,7 +61,7 @@ class TestPortalStateView(GlobalsTestCase):
         self.assertEquals(self.view.anonymous(), True)
         
     def test_friendly_types(self):
-        self.portal.portal_properties.site_properties.types_not_searched = ('Document',)
+        getToolByName(self.portal, 'portal_properties').site_properties.types_not_searched = ('Document',)
         self.failIf('Document' in self.view.friendly_types())
 
 def test_suite():
