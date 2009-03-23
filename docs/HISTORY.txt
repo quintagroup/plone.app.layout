@@ -4,6 +4,8 @@ Changelog
 2.0 - Unreleased
 ----------------
 
+- Guard against catalog item having no modified date.  [maurits]
+
 - Avoid acquiring `portal_properties` and call it via a proper API.
   [hannosch]
 
