@@ -99,7 +99,8 @@ class SiteMapTestCase(PloneTestCase):
         xml = self.uncompress(self.sitemap())
         self.assertFalse('<loc>http://nohost/plone/private</loc>' in xml)
         self.assertFalse('<loc>http://nohost/plone/pending</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/published</loc>' in xml)
+        self.assertTrue('<loc>http://nohost/plone/published</loc>' in xml,
+                        'published not found in sitemap')
 
     def test_anonymous_before_authenticated(self):
         '''
@@ -112,7 +113,8 @@ class SiteMapTestCase(PloneTestCase):
         xml = self.uncompress(self.sitemap())
         self.assertFalse('<loc>http://nohost/plone/private</loc>' in xml)
         self.assertFalse('<loc>http://nohost/plone/pending</loc>' in xml)
-        self.assertTrue('<loc>http://nohost/plone/published</loc>' in xml)
+        self.assertTrue('<loc>http://nohost/plone/published</loc>' in xml,
+                        'published not found in sitemap')
 
         # second round as an authenticated (manager)
         self.loginAsPortalOwner()
@@ -137,7 +139,8 @@ class SiteMapTestCase(PloneTestCase):
         self.logout()
 
         xml = self.uncompress(self.sitemap())
-        self.assertTrue('<loc>http://nohost/plone/pending</loc>' in xml)
+        self.assertTrue('<loc>http://nohost/plone/pending</loc>' in xml,
+                        'pending not found in sitemap')
 
         #removing content
         self.loginAsPortalOwner()
