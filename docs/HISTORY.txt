@@ -53,6 +53,12 @@ Changelog
 - Specified package dependencies.
   [hannosch]
 
+1.2 - Unreleased
+----------------
+
+- Fixed i18n in content_history template.
+  There were two nested msgids and dynamic content.
+  [vincentfretin]
 
 1.2b1 - 2009-03-07
 ------------------

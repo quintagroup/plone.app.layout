@@ -39,27 +39,36 @@
                                     title="Revert to this revision" src="history_revert.png" /></a></li>
                         </ul>
                     </div>
-                    <div class="historyByLine" i18n:translate="history_action">
-                        <span class="historyAction" tal:content="action" i18n:name="action"/>  
-                        by 
-                        <a i18n:name="actor_with_home" href=""
-                            tal:condition="actor_home"
-                            tal:attributes="href actor_home"
-                            tal:content="actor_name"> runyaga </a>
-                        <span i18n:name="actor_without_home" tal:condition="not: actor_home" 
-                            tal:replace="actor_name"/>
-                        on
-                        <span tal:replace="python:context.toLocalizedTime(item['time'],long_format=True)" i18n:name="time"/>
+                    <div class="historyByLine">
+                        <tal:action i18n:translate="history_action">
+                            <span class="historyAction" tal:content="action" i18n:translate="" i18n:name="action"/>  
+                            by 
+                            <tal:actor i18n:name="actor">
+                                <a href=""
+                                   tal:condition="actor_home"
+                                   tal:attributes="href actor_home"
+                                   tal:content="actor_name"> runyaga </a>
+                                <span tal:condition="not: actor_home" 
+                                      tal:replace="actor_name"/>
+                            </tal:actor>
+                            on
+                            <span tal:replace="python:context.toLocalizedTime(item['time'],long_format=True)" i18n:name="time"/>
+                        </tal:action>
                         <tal:effective tal:condition="effective|nothing">
-                            (<span i18n:translate="label_publishing_effective" tal:omit-tag="">effective</span>: <span tal:replace="effectiveDate"/>)
+                            (<span i18n:translate="label_publishing_effective" tal:omit-tag="">effective</span>:
+                            <span tal:replace="effectiveDate"/>)
                         </tal:effective>
+
                     </div>
                     <div class="historyComment" tal:condition="python:rhComments">
                         <p tal:content="rhComments" />
                     </div>
                     <a class="historyComparePrevious" tal:condition="exists:item/diff_previous_url"
                            tal:attributes="href item/diff_previous_url">
-                           <img class="pngIllustration" title="Compare with previous revision" src="history_compare_with_previous_inline.png" />
+                           <img class="pngIllustration"
+                                title="Compare with previous revision"
+                                i18n:attributes="title title_compare_previous_revision"
+                                src="history_compare_with_previous_inline.png" />
                     </a>
                 </div>
             </tal:block>
