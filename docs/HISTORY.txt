@@ -56,6 +56,12 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Author link tag should follow same rules as byline viewlet.
+  [elro]
+
+1.2rc1 - March 20, 2009
+-----------------------
+
 - Fixed i18n in content_history template.
   There were two nested msgids and dynamic content.
   [vincentfretin]
