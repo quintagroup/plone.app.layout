@@ -1,5 +1,33 @@
 from zope.interface import Interface, Attribute
 
+class INavigationBreadcrumbs(Interface):
+
+    def breadcrumbs():
+        """Breadcrumbs for Navigation.
+        """
+
+class INavigationTree(Interface):
+
+    def navigationTreeRootPath():
+        """Get the path to the root of the navigation tree
+        """
+
+    def navigationTree():
+        """Navigation tree
+        """
+
+class ISiteMap(Interface):
+
+    def siteMap():
+        """Site map
+        """
+
+class ISitemapView(Interface):
+    """Interface to the view that creates a site map"""
+
+    def createSiteMap():
+        """Create the site map data structure"""
+
 class INavigationRoot(Interface):
     """A marker interface for signaling the navigation root.
     """

@@ -2,16 +2,70 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser">
 
-    <class class=".navtree.NavtreeStrategyBase">
+    <class class=".basenavtree.NavtreeStrategyBase">
         <allow interface=".interfaces.INavtreeStrategy" />
     </class>
 
-    <browser:page
+  <class class=".navtree.NavtreeQueryBuilder">
+      <allow interface=".interfaces.INavigationQueryBuilder" />
+  </class>
+
+  <browser:page
+    for="*"
+    name="default_page"
+    class=".defaultpage.DefaultPage"
+    permission="zope.Public"
+    allowed_interface=".interfaces.IDefaultPage"
+    />
+
+  <browser:page
       for="*"
-      name="default_page"
-      class=".defaultpage.DefaultPage"
+      name="breadcrumbs_view"
+      class=".breadcrumbs.PhysicalNavigationBreadcrumbs"
       permission="zope.Public"
-      allowed_interface=".interfaces.IDefaultPage"
-      />    
+      allowed_attributes="breadcrumbs"
+      />
+
+  <browser:page
+      for=".interfaces.INavigationRoot"
+      name="breadcrumbs_view"
+      class=".breadcrumbs.RootPhysicalNavigationBreadcrumbs"
+      permission="zope.Public"
+      allowed_attributes="breadcrumbs"
+      />
+
+  <browser:page
+      for="*"
+      name="navtree_builder_view"
+      class=".navtree.CatalogNavigationTree"
+      permission="zope.Public"
+      allowed_attributes="navigationTree"
+      />
+
+  <browser:page
+      for="*"
+      name="sitemap_builder_view"
+      class=".sitemap.CatalogSiteMap"
+      permission="zope.Public"
+      allowed_attributes="siteMap"
+      />
+
+  <browser:page
+      for="*"
+      name="sitemap_view"
+      class=".sitemap.SitemapView"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISitemapView"
+      />
+
+   <adapter for="*
+                .interfaces.INavigationTree"
+            factory=".navtree.DefaultNavtreeStrategy"
+            provides=".interfaces.INavtreeStrategy" />
+
+   <adapter for="*
+                .interfaces.ISiteMap"
+            factory=".navtree.SitemapNavtreeStrategy"
+            provides=".interfaces.INavtreeStrategy" />
 
 </configure>
