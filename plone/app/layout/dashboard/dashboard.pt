@@ -101,22 +101,11 @@
                 <dt i18n:translate="">Info</dt>
                 <dd i18n:translate="info_empty_dashboard">
                     Your dashboard is currently empty. Click the 
-                    <em>edit</em> tab to assign some personal 
-                    portlets.
+                    <em>edit</em> tab to add some content.
                 </dd>
             </dl>
-                
+
             <div id="dashboard">
-                
-                <div class="visualClear"><!-- --></div>
-                <div id="dashboard-portlets1" 
-                  tal:content="structure provider:plone.dashboard1" />
-                <div id="dashboard-portlets2" 
-                  tal:content="structure provider:plone.dashboard2" />
-                <div id="dashboard-portlets3" 
-                  tal:content="structure provider:plone.dashboard3" />
-                <div id="dashboard-portlets4" 
-                  tal:content="structure provider:plone.dashboard4" />
             </div>
             <div class="visualClear"><!-- --></div>
         </div>

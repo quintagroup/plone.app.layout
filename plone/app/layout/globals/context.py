@@ -17,8 +17,6 @@ from Products.CMFPlone import utils
 
 from interfaces import IContextState
 
-from plone.portlets.interfaces import ILocalPortletAssignable
-
 BLACKLISTED_CATEGORIES = (
     'folder_buttons',
     'object_buttons',
@@ -236,9 +234,6 @@ class ContextState(BrowserView):
             max=max,
             )
 
-    def portlet_assignable(self):
-        return ILocalPortletAssignable.providedBy(self.context)
-        
     # Helper methods
     def _lookupTypeActionTemplate(self, actionId):
         context = self.context

@@ -4,6 +4,9 @@ Changelog
 2.0 - Unreleased
 ----------------
 
+- Removed dependency on plone.portlets.
+  [hannosch]
+
 - Moved the remaining navigation related code from Products.CMFPlone.browser
   into this package.
   [hannosch]

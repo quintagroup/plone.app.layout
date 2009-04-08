@@ -2,12 +2,10 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser">
 
-    <include package="plone.app.portlets" />
-
     <browser:page
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         name="dashboard"
-        permission="plone.app.portlets.ManageOwnPortlets"
+        permission="zope2.View"
         class=".dashboard.DashboardView"
         template="dashboard.pt"
         />

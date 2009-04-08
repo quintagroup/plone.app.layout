@@ -151,14 +151,10 @@ class ToolbarViewlet(ViewletBase):
             member = self.portal_state.member()
             userid = member.getId()
 
-            sm = getSecurityManager()
-            if sm.checkPermission('Portlets: Manage own portlets', context):
-                self.homelink_url = self.portal_state.navigation_root_url() + '/dashboard'
+            if userid.startswith('http:') or userid.startswith('https:'):
+                self.homelink_url = self.site_url + '/author/?author=' + userid
             else:
-                if userid.startswith('http:') or userid.startswith('https:'):
-                    self.homelink_url = self.site_url + '/author/?author=' + userid
-                else:
-                    self.homelink_url = self.site_url + '/author/' + quote_plus(userid)
+                self.homelink_url = self.site_url + '/author/' + quote_plus(userid)
 
             membership = getToolByName(context, 'portal_membership')
             member_info = membership.getMemberInfo(member.getId())
