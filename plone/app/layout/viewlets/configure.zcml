@@ -120,14 +120,6 @@
         permission="zope2.View" 
         />
 
-    <!-- The site actions -->
-    <browser:viewlet
-        name="plone.site_actions"
-        manager=".interfaces.IPortalHeader"
-        class=".common.SiteActionsViewlet"
-        permission="zope2.View" 
-        />
-
     <!-- The search box -->
     <browser:viewlet
         name="plone.searchbox"
@@ -149,14 +141,6 @@
         name="plone.toolbar"
         manager=".interfaces.IPortalTop"
         class=".common.ToolbarViewlet"
-        permission="zope2.View" 
-        />
-
-    <!-- The breadcrumbs -->
-    <browser:viewlet
-        name="plone.path_bar"
-        manager=".interfaces.IPortalTop"
-        class=".common.PathBarViewlet"
         permission="zope2.View" 
         />
 
@@ -215,13 +199,6 @@
         permission="zope2.View" 
         />
 
-    <!-- Render the document actions -->
-    <browser:viewlet
-        name="plone.abovecontenttitle.documentactions"
-        manager=".interfaces.IBelowContentBody"
-        class=".content.DocumentActionsViewlet"
-        permission="zope2.View" 
-        />
 
     <!-- Render the document byline -->
     <browser:viewlet

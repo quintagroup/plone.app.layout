@@ -4,6 +4,10 @@ Changelog
 2.0 - Unreleased
 ----------------
 
+- Removed Site Actions, Document Actions, Breadcrumbs from the default layout 
+  for now.
+  [limi]
+
 - Made the personal toolbar a bit simpler: Now assumes that you need to log in
   to render the other actions; uses a pulldown to render them when you are 
   logged in.
