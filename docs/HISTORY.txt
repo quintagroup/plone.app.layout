@@ -4,6 +4,8 @@ Changelog
 2.0 - Unreleased
 ----------------
 
+- Now uses logo.png instead of logo.jpg.
+
 - Removed Site Actions, Document Actions, Breadcrumbs from the default layout 
   for now.
   [limi]
