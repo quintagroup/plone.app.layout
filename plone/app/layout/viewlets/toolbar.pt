@@ -1,40 +1,40 @@
-<div xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-     xmlns:tal="http://xml.zope.org/namespaces/tal"
-     id="portal-toolbar-wrapper"
+<div id="portal-toolbar-wrapper"
      i18n:domain="plone">
 
 <h5 class="hiddenStructure" i18n:translate="">Toolbar</h5>
 
-<ul id="portal-toolbar"
-    tal:condition="python:view.available"
-    class="visualInline">
-   <tal:block condition="not: view/anonymous">
-       <li><a 
-           id="user-name"
-           tal:attributes="href view/homelink_url"
-          ><img src="" tal:replace="structure context/user.gif|nothing" />
-            <span class="visualCaseSensitive"
-                 tal:content="view/user_name">
-                John
-           </span
-       ></a></li>
-   </tal:block>
+<tal:loggedin condition="not: view/anonymous">
+<dl id="portal-toolbar"
+    class="actionMenu"
+    tal:condition="python:view.available">
+    <dt>
+      <a id="user-name"
+         class="visualCaseSensitive"
+         tal:attributes="href view/homelink_url"
+         tal:content="view/user_name">
+        John
+      </a>
+    </dt>
 
-    <tal:actions repeat="action view/user_actions">
-        <li tal:define="icon action/icon|nothing;
-                        class_name string:visualIcon actionicon-${action/category}-${action/id};
-                        class_name python:icon is not None and class_name or nothing;"
-            tal:attributes="class class_name">
-            <a href=""
-               tal:attributes="href action/url;
-                               class python:icon is not None and 'visualIconPadding' or nothing;"
-               tal:content="action/title"
-               i18n:translate="">
-                action title
-            </a>
-        </li>
-    </tal:actions>
+    <dd tal:repeat="action view/user_actions">
+      <a href=""
+         tal:attributes="href action/url;"
+         tal:content="action/title"
+         i18n:translate="">
+         action title
+      </a>
+    </dd>
+</dl>
+</tal:loggedin>
 
-</ul>
+<tal:anon condition="view/anonymous">
+      <a href=""
+         tal:attributes="href string:${view/site_url}/login"
+         id="portal-toolbar"
+         i18n:translate="">
+         Log in
+      </a>
+</tal:anon>
+
+
 </div>

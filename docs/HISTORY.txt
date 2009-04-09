@@ -4,6 +4,11 @@ Changelog
 2.0 - Unreleased
 ----------------
 
+- Made the personal toolbar a bit simpler: Now assumes that you need to log in
+  to render the other actions; uses a pulldown to render them when you are 
+  logged in.
+  [limi]
+
 - Removed dependency on plone.portlets.
   [hannosch]
 
