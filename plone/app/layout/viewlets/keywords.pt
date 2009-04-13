@@ -1,19 +1,19 @@
 <div i18n:domain="plone"
-     id="category"
+     id="tag"
      class="documentByLine"
-     tal:define="categories context/Subject|nothing;
+     tal:define="tags context/Subject|nothing;
                  url_quote  nocall:modules/Products.PythonScripts.standard/url_quote;"
-     tal:condition="categories">
+     tal:condition="tags">
   &mdash;
   <tal:filedunder i18n:translate="label_filed_under">filed under:</tal:filedunder>
-  <span tal:repeat="category categories">
+  <span tal:repeat="tag tags">
     <a href=""
-       class="link-category"
+       class="link-tag"
        rel="tag"
-       tal:content="category"
-       tal:define="quotedCat python:url_quote(category)"
+       tal:content="tag"
+       tal:define="quotedCat python:url_quote(tag)"
        tal:attributes="href string:${context/portal_url}/search?Subject%3Alist=${quotedCat}">
-      Category
-      </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
+      Tag
+      </a><tal:separator condition="not: repeat/tag/end">,</tal:separator>
   </span>
 </div>
