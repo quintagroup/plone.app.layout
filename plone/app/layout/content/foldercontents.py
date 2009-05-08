@@ -141,7 +141,7 @@ class FolderContentsTable(object):
         use_view_action = site_properties.getProperty('typesUseViewActionInListings', ())
         browser_default = context.browserDefault()
 
-        if IATTopic.providedBy(context):
+        if HAS_ATCT and IATTopic.providedBy(context):
             contentsMethod = context.queryCatalog
         else:
             contentsMethod = context.getFolderContents
