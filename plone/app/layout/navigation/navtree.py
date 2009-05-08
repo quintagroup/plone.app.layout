@@ -2,8 +2,8 @@ from zope.component import getMultiAdapter
 from zope.interface import implements
 from zope.publisher.browser import BrowserView
 
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import utils
 
 from plone.app.layout.navigation.basenavtree import buildFolderTree
 from plone.app.layout.navigation.basenavtree import NavtreeQueryBuilder
@@ -55,7 +55,7 @@ class CatalogNavigationTree(BrowserView):
             if context.is_folderish():
                 return '/'.join(context.getPhysicalPath())
             else:
-                return '/'.join(utils.parent(context).getPhysicalPath())
+                return '/'.join(aq_parent(context).getPhysicalPath())
 
         rootPath = getNavigationRoot(context)
 

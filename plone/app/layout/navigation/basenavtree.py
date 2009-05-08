@@ -1,15 +1,26 @@
 from types import StringType
 
-from zope.component import getMultiAdapter
 from zope.interface import implements
 
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import utils
 
-from plone.app.layout.navigation.interfaces import INavtreeStrategy
-from plone.app.layout.navigation.interfaces import INavigationQueryBuilder
-from plone.app.layout.navigation.root import getNavigationRoot
+from .defaultpage import isDefaultPage
+from .interfaces import INavtreeStrategy
+from .interfaces import INavigationQueryBuilder
+from .root import getNavigationRoot
+
+
+def typesToList(context):
+    ntp = getToolByName(context, 'portal_properties').navtree_properties
+    ttool = getToolByName(context, 'portal_types')
+    bl = ntp.getProperty('metaTypesNotToList', ())
+    bl_dict = {}
+    for t in bl:
+        bl_dict[t] = 1
+    all_types = ttool.listContentTypes()
+    wl = [t for t in all_types if not t in bl_dict]
+    return wl
 
 
 class NavtreeStrategyBase(object):
@@ -124,8 +135,7 @@ def buildFolderTree(context, obj=None, query={}, strategy=NavtreeStrategyBase())
     if obj is not None:
         objPhysicalPath = obj.getPhysicalPath()
         parent = aq_parent(obj)
-        view = getMultiAdapter((parent, request), name='default_page')
-        if view.isDefaultPage(obj):
+        if isDefaultPage(parent, obj):
             objPhysicalPath = objPhysicalPath[:-1]
         objPath = '/'.join(objPhysicalPath)
 
@@ -377,7 +387,7 @@ class NavtreeQueryBuilder(object):
              query['path']['navtree_start'] = topLevel + 1
 
         # Only list the applicable types
-        query['portal_type'] = utils.typesToList(context)
+        query['portal_type'] = typesToList(context)
 
         # Apply the desired sort
         sortAttribute = navtree_properties.getProperty('sortAttribute', None)

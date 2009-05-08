@@ -54,6 +54,5 @@ setup(name='plone.app.layout',
         'Acquisition',
         'DateTime',
         'Zope2',
-        'Plone',
       ],
       )

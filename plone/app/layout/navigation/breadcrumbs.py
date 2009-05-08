@@ -1,3 +1,4 @@
+from plone.navigation.interfaces import IHideFromBreadcrumbs
 from zope.interface import implements
 from zope.component import getMultiAdapter
 from zope.publisher.browser import BrowserView
@@ -5,11 +6,11 @@ from zope.publisher.browser import BrowserView
 from Acquisition import aq_base
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import utils
 
-from plone.navigation.interfaces import IHideFromBreadcrumbs
-from plone.app.layout.navigation.interfaces import INavigationBreadcrumbs
-from plone.app.layout.navigation.root import getNavigationRoot
+from plone.app.layout.utils import pretty_title_or_id
+from .defaultpage import isDefaultPage
+from .interfaces import INavigationBreadcrumbs
+from .root import getNavigationRoot
 
 
 def get_url(item):
@@ -51,7 +52,7 @@ class CatalogNavigationBreadcrumbs(BrowserView):
 
         # Check to see if the current page is a folder default view, if so
         # get breadcrumbs from the parent folder
-        if utils.isDefaultPage(context, request):
+        if isDefaultPage(aq_parent(context), context):
             currentPath = '/'.join(aq_parent(context).getPhysicalPath())
         else:
             currentPath = '/'.join(context.getPhysicalPath())
@@ -76,7 +77,7 @@ class CatalogNavigationBreadcrumbs(BrowserView):
                 continue
 
             id, item_url = get_view_url(item)
-            data = {'Title': utils.pretty_title_or_id(context, item),
+            data = {'Title': pretty_title_or_id(context, item),
                     'absolute_url': item_url}
             result.append(data)
         return result
@@ -98,7 +99,7 @@ class PhysicalNavigationBreadcrumbs(BrowserView):
 
         if container is None:
             return ({'absolute_url': item_url,
-                     'Title': utils.pretty_title_or_id(context, context),
+                     'Title': pretty_title_or_id(context, context),
                     },)
 
         view = getMultiAdapter((container, request), name='breadcrumbs_view')
@@ -115,9 +116,9 @@ class PhysicalNavigationBreadcrumbs(BrowserView):
         itemPath = '/'.join(context.getPhysicalPath())
 
         # don't show default pages in breadcrumbs or pages above the navigation root
-        if not utils.isDefaultPage(context, request) and not rootPath.startswith(itemPath):
+        if not isDefaultPage(container, context) and not rootPath.startswith(itemPath):
             base += ({'absolute_url': item_url,
-                      'Title': utils.pretty_title_or_id(context, context),
+                      'Title': pretty_title_or_id(context, context),
                      },)
 
         return base

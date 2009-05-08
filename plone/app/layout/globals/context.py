@@ -1,5 +1,4 @@
 from zope.interface import implements
-from zope.component import getMultiAdapter
 from zope.component import queryAdapter
 from zope.component import queryMultiAdapter
 from zope.component import getUtility
@@ -13,9 +12,10 @@ from DateTime import DateTime
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFDynamicViewFTI.interface import IBrowserDefault
-from Products.CMFPlone import utils
 
-from interfaces import IContextState
+from plone.app.layout.navigation.defaultpage import isDefaultPage
+from plone.app.layout.utils import pretty_title_or_id
+from .interfaces import IContextState
 
 BLACKLISTED_CATEGORIES = (
     'folder_buttons',
@@ -128,7 +128,7 @@ class ContextState(BrowserView):
     @memoize
     def object_title(self):
         context = self.context
-        return utils.pretty_title_or_id(context, context)
+        return pretty_title_or_id(context, context)
 
     @memoize
     def workflow_state(self):
@@ -189,15 +189,14 @@ class ContextState(BrowserView):
             return False
         else:
             return folderish
-        
+
     @memoize
     def is_default_page(self):
         context = self.context
         container = aq_parent(context)
         if not container:
             return False
-        view = getMultiAdapter((container, self.request), name='default_page')
-        return view.isDefaultPage(context)
+        return isDefaultPage(container, context)
     
     @memoize
     def is_portal_root(self):

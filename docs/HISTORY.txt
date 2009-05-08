@@ -3,6 +3,10 @@ Changelog
 
 2.0 - Unreleased
 ----------------
+
+- Removed this packages dependency on CMFPlone.
+  [hannosch]
+
 - "Categories" are now "Tags", in line with common usage and terminology. 
   [limi]
 

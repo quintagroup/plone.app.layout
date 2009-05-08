@@ -5,15 +5,15 @@ from zope.interface import implements
 from zope.publisher.browser import BrowserView
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import utils
 
-from plone.app.layout.navigation.basenavtree import buildFolderTree
-from plone.app.layout.navigation.basenavtree import NavtreeStrategyBase
-from plone.app.layout.navigation.navtree import NavtreeQueryBuilder
-from plone.app.layout.navigation.interfaces import INavtreeStrategy
-from plone.app.layout.navigation.interfaces import ISiteMap
-from plone.app.layout.navigation.interfaces import ISitemapView
-from plone.app.layout.navigation.root import getNavigationRoot
+from plone.app.layout.utils import pretty_title_or_id
+from .basenavtree import buildFolderTree
+from .basenavtree import NavtreeStrategyBase
+from .navtree import NavtreeQueryBuilder
+from .interfaces import INavtreeStrategy
+from .interfaces import ISiteMap
+from .interfaces import ISitemapView
+from .root import getNavigationRoot
 
 
 class SitemapView(BrowserView):
@@ -105,7 +105,7 @@ class SitemapNavtreeStrategy(NavtreeStrategyBase):
 
         ploneview = getMultiAdapter((context, request), name=u'plone')
 
-        newNode['Title'] = utils.pretty_title_or_id(context, item)
+        newNode['Title'] = pretty_title_or_id(context, item)
         newNode['absolute_url'] = itemUrl
         newNode['getURL'] = itemUrl
         newNode['path'] = item.getPath()
