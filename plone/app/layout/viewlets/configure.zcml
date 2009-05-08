@@ -176,7 +176,7 @@
     <browser:viewlet
         name="plone.contentactions"
         for="*"
-        view="plone.app.content.browser.interfaces.IFolderContentsView"
+        view="plone.app.layout.content.interfaces.IFolderContentsView"
         manager=".interfaces.IContentViews"
         class=".common.ContentActionsViewlet"
         permission="zope2.View"
