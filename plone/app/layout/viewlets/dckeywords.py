@@ -1,14 +1,13 @@
 from Acquisition import aq_inner
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.app.layout.viewlets import ViewletBase
 
 
-CEILING_DATE = DefaultDublinCoreImpl._DefaultDublinCoreImpl__CEILING_DATE
-FLOOR_DATE = DefaultDublinCoreImpl._DefaultDublinCoreImpl__FLOOR_DATE
+CEILING_DATE = DateTime(2500, 0)
+FLOOR_DATE = DateTime(1970, 0)
 
 # dublic core accessor name -> metadata name
 METADATA_DCNAME = {

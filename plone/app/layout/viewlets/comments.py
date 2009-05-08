@@ -4,7 +4,6 @@ from Acquisition import aq_inner, aq_parent
 from AccessControl import getSecurityManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.DiscussionTool import DiscussionNotAllowed
 
 from plone.app.layout.viewlets.common import ViewletBase
 
@@ -31,7 +30,7 @@ class CommentsViewlet(ViewletBase):
 
         context = aq_inner(self.context)
         container = aq_parent(context)
-        pd = self.portal_discussion
+        pd = getToolByName(context, 'portal_discussion', None)
 
         def getRs(obj, replies, counter):
             rs = pd.getDiscussionFor(obj).getReplies()
@@ -41,12 +40,9 @@ class CommentsViewlet(ViewletBase):
                     replies.append({'depth':counter, 'object':r})
                     getRs(r, replies, counter=counter + 1)
 
-        try:
+        if pd is not None and pd.isDiscussionAllowedFor(context):
             getRs(context, replies, 0)
-        except DiscussionNotAllowed:
-            # We tried to get discussions for an object that has not only
-            # discussions turned off but also no discussion container.
-            return []
+
         return replies
 
     def is_anonymous(self):
