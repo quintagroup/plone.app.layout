@@ -176,7 +176,7 @@ class FolderContentsTable(object):
             if obj_type in use_view_action:
                 view_url = url + '/view'
             elif obj.is_folderish:
-                view_url = url + "/folder_contents"              
+                view_url = url + "/folder_contents"
             else:
                 view_url = url
 
