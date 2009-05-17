@@ -5,6 +5,7 @@ from zope.publisher.browser import BrowserView
 
 from Acquisition import aq_base
 from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFCore.utils import getToolByName
 from Products.CMFDynamicViewFTI.interface import IBrowserDefault
 from Products.CMFDynamicViewFTI.interface import IDynamicViewTypeInformation
 
@@ -107,7 +108,7 @@ def getDefaultPage(context):
                 return _lookupTranslationId(context, page)
 
         # 4. Test for default sitewide default_page setting
-        pp = getattr(portal, 'portal_properties', None)
+        pp = getToolByName(portal, 'portal_properties', None)
         if pp is not None:
             site_properties = getattr(pp, 'site_properties', None)
             if site_properties is not None:
