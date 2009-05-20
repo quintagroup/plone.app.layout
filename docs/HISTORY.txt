@@ -94,6 +94,19 @@ Changelog
 1.2 - May 16, 2009
 ------------------
 
+- Filter not-interesting history entries in content history viewlet. This
+  prevents an empty history viewlet from being shown.
+  [wichert]
+
+- Fixed querystring in CSS validation link in viewlets/colophon.pt 
+  There was an ampersand where the leading "?" should have been.
+  http://dev.plone.org/plone/ticket/9054
+  [siebo]
+
+- Fixed "region-content" id twice in dashboard.pt, replaced one by "content".
+  Fixes http://dev.plone.org/plone/ticket/8932
+  [vincentfretin]
+
 - Author link tag should follow same rules as byline viewlet.
   [elro]
 
@@ -106,6 +119,9 @@ Changelog
 
 1.2b1 - 2009-03-07
 ------------------
+
+- Removed stray span tags in the comment byline.
+  [limi]
 
 - Added navigation_root_url to the common viewlets base class. Adjusted the
   various viewlets templates to use the new attribute. Changed the dashboard

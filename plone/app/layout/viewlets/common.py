@@ -43,11 +43,11 @@ class ViewletBase(BrowserView):
                                             name=u'plone_portal_state')
         self.site_url = self.portal_state.portal_url()
         self.navigation_root_url = self.portal_state.navigation_root_url()
-        
+
     def render(self):
         # defer to index method, because that's what gets overridden by the template ZCML attribute
         return self.index()
-        
+
     def index(self):
         raise NotImplementedError(
             '`index` method must be implemented by subclass.')
@@ -127,10 +127,6 @@ class SearchBoxViewlet(ViewletBase):
 
 class LogoViewlet(ViewletBase):
     index = ViewPageTemplateFile('logo.pt')
-
-    def update(self):
-        super(LogoViewlet, self).update()
-        self.portal_title = self.portal_state.portal_title()
 
 
 class ToolbarViewlet(ViewletBase):
