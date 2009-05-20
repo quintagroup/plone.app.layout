@@ -85,8 +85,14 @@ Changelog
 - Specified package dependencies.
   [hannosch]
 
-1.2 - Unreleased
-----------------
+1.2.1 - 2009-05-20
+------------------
+
+- Changed the search and author header links to respect the navigation root.
+  [hannosch]
+
+1.2 - May 16, 2009
+------------------
 
 - Author link tag should follow same rules as byline viewlet.
   [elro]
