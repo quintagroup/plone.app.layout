@@ -26,6 +26,8 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         self.assertEqual(viewlet.locked_icon(), "")
 
     def test_locked_icon(self):
+        lockIconUrl = '<img src="http://nohost/plone/lock_icon.gif" alt="" \
+title="Locked" height="16" width="16" />'
         request = self.app.REQUEST
         self.setRoles(['Manager', 'Member'])
         self.portal.invokeFactory('Document', 'd1')
@@ -34,12 +36,10 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         viewlet.update()
         self.assertEqual(viewlet.locked_icon(), "")
         ILockable(context).lock()
-        self.assertEqual(viewlet.locked_icon(), "")
+        self.assertEqual(viewlet.locked_icon(), lockIconUrl)
         self.login('Alan')
         viewlet = DocumentBylineViewlet(context, request, None, None)
         viewlet.update()
-        lockIconUrl = '<img src="http://nohost/plone/lock_icon.gif" alt="" \
-title="Locked" height="16" width="16" />'
         self.assertEqual(viewlet.locked_icon(), lockIconUrl)
 
 def test_suite():
