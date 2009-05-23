@@ -5,4 +5,4 @@
           title="Author information"
           i18n:attributes="title title_author_info"
           tal:attributes="href string:${navigation_root_url}/author/${context/Creator|nothing}" />
-</div>
+</tal:author>
