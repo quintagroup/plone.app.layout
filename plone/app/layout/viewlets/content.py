@@ -202,7 +202,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
     def revisionHistory(self):
         context = aq_inner(self.context)
         rt = getToolByName(context, "portal_repository")
-        allowed = getSecurityManager().checkPermission(
+        allowed = rt.isVersionable(context) and getSecurityManager().checkPermission(
             'CMFEditions: Access previous versions', context)
         if not allowed:
             return []
