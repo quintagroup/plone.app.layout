@@ -29,6 +29,7 @@ setup(name='plone.app.layout',
             'plone.app.controlpanel',
             'zope.annotation',
             'zope.testing',
+            'Products.CMFEditions',
             'Products.PloneTestCase',
         ]
       ),

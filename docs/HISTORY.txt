@@ -85,6 +85,22 @@ Changelog
 - Specified package dependencies.
   [hannosch]
 
+1.2.3 - 2009-06-12
+------------------
+
+- Fix issue when dealing with empty version histories in history viewlet.
+  [alecm]
+
+1.2.2 - 2009-06-11
+------------------
+
+- Make ContentHistoryViewlet use new metadata only history method to
+  speed up listing.
+  [alecm]
+
+- Make ContentHistoryViewlet check if context isVersionable.
+  [elro]
+
 1.2.1 - 2009-05-20
 ------------------
 
