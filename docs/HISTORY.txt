@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0 - Unreleased
+3.0 - Unreleased
 ----------------
 
 - Moved the folder contents and review list functionality from
@@ -85,6 +85,109 @@ Changelog
 - Specified package dependencies.
   [hannosch]
 
+- Micro-optimize the personal_bar viewlet.
+  [hannosch]
+
+- Reduced the GlobalSectionsViewlet implementation to a simple static template
+  showing a link to the root. The more common use-case is to have a static
+  list of sections that do not necessarily match the content of a particular
+  folder. A simple static viewlet is more useful for this than the current
+  overly complex implementation.
+  [hannosch]
+
+- Replaced portal_actionicons and getIconFor handling by relying on the icon
+  attribute of each action directly.
+  [hannosch]
+
+- Removed footer viewlet and simplified colophon, so they might actually be
+  used for public sites. The site actions viewlet uses simple static HTML now.
+  Add your own viewlet if you want to customize the output. Also removed the
+  link to the accessibility into page, we cannot make any claims about this
+  for the sites being developed with Plone.
+  [hannosch]
+
+- Fixed is_rtl test to work with new locale based approach.
+  [hannosch]
+
+- Adjusted dashboard to new controlpanel actions approach.
+  [hannosch]
+
+- Moved isExpired script into a method on the context view.
+  [hannosch]
+
+- Updated the GlobalSectionsViewlet to use the extended tabs_view.
+  [hannosch]
+
+- Disabled the content history viewlet in the default installation. It is too
+  slow to be rendered on every page load and only rarely needed. Either the
+  history tab should provide the information or the history needs to be an
+  asynchronous request.
+  [hannosch]
+
+- Removed micro-level viewlet output caching. The overhead of caching simple
+  almost static HTML snippets is bigger than the advantage.
+  [hannosch]
+
+- Fixed sitemap tests to be independent of default content.
+  [hannosch]
+
+- Fixed test setup code for the analytics tests and simplified tests.
+  [hannosch]
+
+- Use a normal ZPublisher NotFound exception in the sitemap code, instead of
+  using an exception from zope.publisher.
+  [hannosch]
+
+- In WorkflowHistoryViewlet, add the missing 'fullname' key to the
+  actor dict when the actor is unknown.
+  [nouri]
+
+- Handle titles with non-ascii content correctly when generating cache keys.
+  [ender, nouri, wichert]
+
+- Fixed the portal state view to look for uppercase language in the request,
+  since that is set by PloneLanguageTool. This closes
+  http://dev.plone.org/plone/ticket/8342.
+  [hannosch]
+
+- Adjusted analytics test to new HTML output.
+  [hannosch]
+
+- Added RAM caching to the colophon, footer and path bar viewlets.
+  [hannosch]
+
+
+2.0 - unreleased
+----------------
+
+- Removed memoizing for things which are only used once in a page.
+  [hannosch]
+
+- Replaced direct invocations of interfaces with queryAdapter calls. The
+  former does a suboptimal getattr call internally.
+  [hannosch]
+
+- Sanitized the actions handling on the context state view. You can pass in
+  an action category into the action method now, which is the preferred way.
+  This allows us to avoid evaluating all actions in the current context if
+  we are only interested in some of the categories.
+  [hannosch]
+
+- Since Zope 2.11 the locale is available on the request. Removed our special
+  code from the portal state view and rely directly on the request.
+  [hannosch]
+
+- Added a couple of missing XML namespace declarations to viewlet templates.
+  [hannosch]
+
+- Changed ViewletBase so viewlets can be registered as zope.contentproviders.
+  This closes http://dev.plone.org/plone/ticket/7868.
+  [hannosch]
+
+- Purge old zope2 Interface interfaces for Zope 2.12 compatibility.
+  [elro]
+  
+
 1.2.5 - unreleased
 ------------------
 
@@ -126,6 +229,10 @@ Changelog
   prevents an empty history viewlet from being shown.
   [wichert]
 
+- Add a new content history viewlet which combines the full workflow history
+  and content versions. Render this instead of the workflow history viewlet.
+  [wichert]
+
 - Fixed querystring in CSS validation link in viewlets/colophon.pt 
   There was an ampersand where the leading "?" should have been.
   http://dev.plone.org/plone/ticket/9054
@@ -145,11 +252,11 @@ Changelog
   There were two nested msgids and dynamic content.
   [vincentfretin]
 
-1.2b1 - 2009-03-07
-------------------
-
 - Removed stray span tags in the comment byline.
   [limi]
+
+1.2b1 - 2009-03-07
+------------------
 
 - Added navigation_root_url to the common viewlets base class. Adjusted the
   various viewlets templates to use the new attribute. Changed the dashboard
@@ -185,6 +292,10 @@ Changelog
   http://dev.plone.org/plone/ticket/8607.
   [jnelson, calvinhp]
 
+- Fixed Plone 3.1 backward compatibility of above.
+  [stefan]
+
+
 1.1.7 - December 15, 2008
 -------------------------
 
@@ -193,110 +304,9 @@ Changelog
   the other list items and easier to style for RTL scripts.
   [emanlove]
 
-- Micro-optimize the personal_bar viewlet.
-  [hannosch]
 
-- Reduced the GlobalSectionsViewlet implementation to a simple static template
-  showing a link to the root. The more common use-case is to have a static
-  list of sections that do not necessarily match the content of a particular
-  folder. A simple static viewlet is more useful for this than the current
-  overly complex implementation.
-  [hannosch]
-
-- Replaced portal_actionicons and getIconFor handling by relying on the icon
-  attribute of each action directly.
-  [hannosch]
-
-- Removed footer viewlet and simplified colophon, so they might actually be
-  used for public sites. The site actions viewlet uses simple static HTML now.
-  Add your own viewlet if you want to customize the output. Also removed the
-  link to the accessibility into page, we cannot make any claims about this
-  for the sites being developed with Plone.
-  [hannosch]
-
-- Fixed is_rtl test to work with new locale based approach.
-  [hannosch]
-
-- Adjusted dashboard to new controlpanel actions approach.
-  [hannosch]
-
-- Moved isExpired script into a method on the context view.
-  [hannosch]
-
-- Updated the GlobalSectionsViewlet to use the extended tabs_view.
-  [hannosch]
-
-- Removed memoizing for things which are only used once in a page.
-  [hannosch]
-
-- Replaced direct invocations of interfaces with queryAdapter calls. The
-  former does a suboptimal getattr call internally.
-  [hannosch]
-
-- Sanitized the actions handling on the context state view. You can pass in
-  an action category into the action method now, which is the preferred way.
-  This allows us to avoid evaluating all actions in the current context if
-  we are only interested in some of the categories.
-  [hannosch]
-
-- Disabled the content history viewlet in the default installation. It is too
-  slow to be rendered on every page load and only rarely needed. Either the
-  history tab should provide the information or the history needs to be an
-  asynchronous request.
-  [hannosch]
-
-- Since Zope 2.11 the locale is available on the request. Removed our special
-  code from the portal state view and rely directly on the request.
-  [hannosch]
-
-- Removed micro-level viewlet output caching. The overhead of caching simple
-  almost static HTML snippets is bigger than the advantage.
-  [hannosch]
-
-- Fixed sitemap tests to be independent of default content.
-  [hannosch]
-
-- Fixed test setup code for the analytics tests and simplified tests.
-  [hannosch]
-
-- Use a normal ZPublisher NotFound exception in the sitemap code, instead of
-  using an exception from zope.publisher.
-  [hannosch]
-
-- In WorkflowHistoryViewlet, add the missing 'fullname' key to the
-  actor dict when the actor is unknown.
-  [nouri]
-
-- Handle titles with non-ascii content correctly when generating cache keys.
-  [ender, nouri, wichert]
-
-- Added a couple of missing XML namespace declarations to viewlet templates.
-  [hannosch]
-
-- Fixed the portal state view to look for uppercase language in the request,
-  since that is set by PloneLanguageTool. This closes
-  http://dev.plone.org/plone/ticket/8342.
-  [hannosch]
-
-- Adjusted analytics test to new HTML output.
-  [hannosch]
-
-- Changed ViewletBase so viewlets can be registered as zope.contentproviders.
-  This closes http://dev.plone.org/plone/ticket/7868.
-  [hannosch]
-
-- Added RAM caching to the colophon, footer and path bar viewlets.
-  [hannosch]
-
-- Purge old zope2 Interface interfaces for Zope 2.12 compatibility.
-  [elro]
-
-- Add a new content history viewlet which combines the full workflow history
-  and content versions. Render this instead of the workflow history viewlet.
-  [wichert]
-
-1.1.6 Unreleased
-----------------
+1.1.6 Released November 21st, 2008
+----------------------------------
 
 - Avoid a test failure caused by test interdependencies.
   [hannosch]
