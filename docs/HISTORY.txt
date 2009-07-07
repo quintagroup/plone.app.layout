@@ -286,12 +286,12 @@ Changelog
   only an user with more privilegs is allowed to see. We also make sure that
   the cached file was build with a current catalog by adding the catalog
   counter to the cache key. Based on a patch by stxnext. Fixes
-  http://dev.plone.org/plone/ticket/8402.
+  http://dev.plone.org/plone/ticket/8402
   [stxnext, csenger]
 
 - Added time_only for use with toLocalizedTime so that event_view now localizes
   the start/end times if the start/end dates are the same. Closes
-  http://dev.plone.org/plone/ticket/8607.
+  http://dev.plone.org/plone/ticket/8607
   [jnelson, calvinhp]
 
 - Fixed Plone 3.1 backward compatibility of above.
@@ -321,7 +321,7 @@ Changelog
   [younga3, dunlapm]
 
 - Fixed site_icon so that we would have flipped icon in case of RTL.
-  This closes https://dev.plone.org/plone/ticket/4576
+  This closes http://dev.plone.org/plone/ticket/4576
   [spliter]
 
 - Fixed generation of links to author.cpt for user IDs that are a URL
@@ -332,7 +332,6 @@ Changelog
   closes http://dev.plone.org/plone/ticket/8402
   [encolpe]
 
-
 1.1.5 Released August 18th, 2008
 --------------------------------
 
@@ -342,7 +341,7 @@ Changelog
 
 - Fixed comments.pt to pass the title of the comment you are replying to into
   the discussion_reply_form. This closes 
-  https://dev.plone.org/plone/ticket/8323
+  http://dev.plone.org/plone/ticket/8323
   [calvinhp]
 
 - Refactor default_page: move all logic out of the view to separate methods
