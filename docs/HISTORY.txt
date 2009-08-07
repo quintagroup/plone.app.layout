@@ -4,6 +4,9 @@ Changelog
 2.0 - unreleased
 ----------------
 
+- Updated viewlets to use the new getFullname method from the MembershipTool
+  [robgietema]
+
 - Fixed is_rtl test to work with new locale based approach.
   [hannosch]
 
