@@ -18,7 +18,6 @@
       <a href="#"
          tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/author/${view/creator}"
          tal:content="view/authorname"
-         tal:omit-tag="not:view/author"
          i18n:name="author">
         Bob Dobalina
       </a>

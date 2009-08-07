@@ -73,11 +73,6 @@ class DocumentBylineViewlet(ViewletBase):
         return self.context.Creator()
 
     @memoize
-    def author(self):
-        membership = getToolByName(self.context, 'portal_membership')
-        return membership.getMemberInfo(self.creator())
-
-    @memoize
     def authorname(self):
         membership = getToolByName(self.context, 'portal_membership')
         return membership.getFullname(self.creator())
