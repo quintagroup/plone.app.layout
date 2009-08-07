@@ -136,13 +136,8 @@ class WorkflowHistoryViewlet(ViewletBase):
                         r['actor'] = {'username': anon, 'fullname': anon}
                         r['actor_home'] = ''
                     else:
-                        r['actor'] = membership.getMemberInfo(actorid)
-                        if r['actor'] is not None:
-                            r['actor_home'] = self.navigation_root_url + '/author/' + actorid
-                        else:
-                            # member info is not available
-                            # the user was probably deleted
-                            r['actor_home'] = ''
+                        r['actor'] = {'username': actorid, 'fullname': membership.getFullname(actorid)}
+                        r['actor_home'] = self.navigation_root_url + '/author/' + actorid
                 review_history.reverse()
 
             except WorkflowException:
@@ -160,15 +155,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
     @memoize
     def getUserInfo(self, userid):
         mt = getToolByName(self.context, 'portal_membership')
-        info=mt.getMemberInfo(userid)
-        if info is None:
-            return dict(actor_home="",
-                        actor=dict(fullname=userid))
-
-        if not info.get("fullname", None):
-            info["fullname"]=userid
-
-        return dict(actor=info,
+        return dict(actor=dict(fullname=mt.getFullname(userid)),
                     actor_home="%s/author/%s" % (self.site_url, userid))
 
     @memoize
