@@ -184,18 +184,7 @@ class PersonalBarViewlet(ViewletBase):
                     self.homelink_url = self.site_url + '/author/' + quote_plus(userid)
 
             membership = getToolByName(context, 'portal_membership')
-            member_info = membership.getMemberInfo(member.getId())
-            # member_info is None if there's no Plone user object, as when
-            # using OpenID.
-            if member_info:
-                fullname = member_info.get('fullname', '')
-            else:
-                fullname = None
-            if fullname:
-                self.user_name = fullname
-            else:
-                self.user_name = userid
-
+            self.user_name = membership.getFullname(member.getId())
 
 class PathBarViewlet(ViewletBase):
     index = ViewPageTemplateFile('path_bar.pt')
