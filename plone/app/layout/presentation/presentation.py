@@ -78,8 +78,8 @@ class PresentationView(BrowserView):
 
     @memoize
     def authorname(self):
-        author = self.author()
-        return author and author['fullname'] or self.creator()
+        membership = getToolByName(self.context, "portal_membership")
+        return membership.getFullname(self.creator())
 
 
 class PresentationViewlet(ViewletBase):
