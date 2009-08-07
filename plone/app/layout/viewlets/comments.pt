@@ -42,8 +42,7 @@
                 <div class="documentByLine"
                      tal:define="creator reply/Creator;
                                  anonymous_creator python:creator in ('Anonymous User', '');
-                                 mi python:not anonymous_creator and view.member_info(creator);
-                                 fullname python: mi and mi['fullname'] or creator;" >
+                                 fullname python:not anonymous_creator and view.fullname(creator);" >
                         <tal:posted i18n:translate="label_comment_by">Posted by</tal:posted>
                         <tal:name content="fullname"
                                   condition="not:anonymous_creator">Poster Name</tal:name>

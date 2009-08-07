@@ -58,11 +58,11 @@ class CommentsViewlet(ViewletBase):
     def can_manage(self):
         return getSecurityManager().checkPermission('Manage portal', aq_inner(self.context))
 
-    def member_info(self, creator):
+    def fullname(self, creator):
         if self.portal_membership is None:
             return None
         else:
-            return self.portal_membership.getMemberInfo(creator)
+            return self.portal_membership.getFullname(creator)
 
     def format_time(self, time):
         context = aq_inner(self.context)
