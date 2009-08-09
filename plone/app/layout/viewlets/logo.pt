@@ -1,5 +1,4 @@
-<a xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:metal="http://xml.zope.org/namespaces/metal"
+<a xmlns:metal="http://xml.zope.org/namespaces/metal"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
    xmlns:tal="http://xml.zope.org/namespaces/tal"
    metal:define-macro="portal_logo"
