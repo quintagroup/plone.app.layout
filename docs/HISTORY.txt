@@ -160,6 +160,10 @@ Changelog
 2.0 - unreleased
 ----------------
 
+- "Log in to add comments" button is now a link and respects the login URL
+  specified in portal_actions. Closes http://dev.plone.org/plone/ticket/9071.
+  [erikrose]
+
 - Removed memoizing for things which are only used once in a page.
   [hannosch]
 
