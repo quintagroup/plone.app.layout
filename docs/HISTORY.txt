@@ -4,6 +4,12 @@ Changelog
 2.0 - unreleased
 ----------------
 
+- Set the search form to submit to @@search in order to use the new search results page
+  [elvix]
+
+- Updated the BaseIcon to return its html tag when called
+  [elvix]
+
 - Fixed is_rtl test to work with new locale based approach.
   [hannosch]
 
