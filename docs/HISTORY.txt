@@ -4,6 +4,12 @@ Changelog
 3.0 - Unreleased
 ----------------
 
+- Adjusted the fix for http://dev.plone.org/plone/ticket/9071 from 2.0 to work
+  with trunk. There's no login action anymore. We point to `/login` now as a
+  login target. This points to a our alias view and can be overridden to the
+  same effect as the former action.
+  [hannosch]
+
 - Moved the folder contents and review list functionality from
   plone.app.content into this package.
   [hannosch]
