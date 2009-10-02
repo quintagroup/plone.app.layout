@@ -50,6 +50,7 @@ class ViewletBase(BrowserView):
 
 
 class TitleViewlet(ViewletBase):
+    index = ViewPageTemplateFile('title.pt')
 
     def update(self):
         self.portal_state = getMultiAdapter((self.context, self.request),
@@ -59,15 +60,15 @@ class TitleViewlet(ViewletBase):
         self.page_title = self.context_state.object_title
         self.portal_title = self.portal_state.portal_title
 
-    def index(self):
-        portal_title = safe_unicode(self.portal_title())
-        page_title = safe_unicode(self.page_title())
-        if page_title == portal_title:
-            return u"<title>%s</title>" % (escape(portal_title))
-        else:
-            return u"<title>%s &mdash; %s</title>" % (
-                escape(safe_unicode(page_title)),
-                escape(safe_unicode(portal_title)))
+#    def index(self):
+#        portal_title = safe_unicode(self.portal_title())
+#        page_title = safe_unicode(self.page_title())
+#        if page_title == portal_title:
+#            return u"<title>%s</title>" % (escape(portal_title))
+#        else:
+#            return u"<title>%s &mdash; %s</title>" % (
+#                escape(safe_unicode(page_title)),
+#                escape(safe_unicode(portal_title)))
 
 
 class TableOfContentsViewlet(ViewletBase):

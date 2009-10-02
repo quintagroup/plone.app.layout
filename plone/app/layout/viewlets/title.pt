@@ -1,0 +1,18 @@
+
+    <title tal:define="safe_unicode python:modules['Products.CMFPlone.utils'].safe_unicode;
+                       portal_title python:view.portal_title;
+                       page_title python:view.page_title;">
+
+        <tal:hastitle condition="python: safe_unicode(portal_title) != safe_unicode(page_title)">
+            <tal:pagetitle replace="page_title">
+                Inserts page title
+            </tal:pagetitle>
+            &mdash;
+        </tal:hastitle>
+
+        <tal:portaltitle replace="portal_title">
+            Inserts portal title
+        </tal:portaltitle>
+
+    </title>
+
