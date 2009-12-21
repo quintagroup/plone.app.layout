@@ -36,11 +36,8 @@ class DocumentBylineViewlet(ViewletBase):
 
     @memoize
     def show(self):
-        properties = getToolByName(self.context, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        anonymous = self.portal_state.anonymous()
-        allowAnonymousViewAbout = site_properties.getProperty('allowAnonymousViewAbout', True)
-        return not anonymous or allowAnonymousViewAbout
+        mtool = getToolByName(self.context, 'portal_membership')
+        return mtool.checkPermission('View about', self.context)
 
     @memoize
     def locked_icon(self):
