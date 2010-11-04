@@ -3,6 +3,11 @@ Changelog
 
 2.0.5 - Unreleased
 ------------------
+
+- Remove the login alias, this should live with the login machinery in
+  CMFPlone/skins/plone_login.
+  [elro]
+
 - XHTML 1.0 Strict searchbox.pt.
   This fixes https://dev.plone.org/plone/ticket/11007
   [kiorky]
