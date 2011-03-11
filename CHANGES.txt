@@ -4,6 +4,13 @@ Changelog
 2.1.4 - Unreleased
 ------------------
 
+- Fixed validation of the personal bar for anonymous user.
+  [spliter]
+
+- Replaced obsolete in HTML5 <acronym> element with <abbr>.
+  References https://dev.plone.org/plone/ticket/11300.
+  [spliter]
+
 - Make the body section- class based on the navigation root instead of the
   portal root.
   [elro]
