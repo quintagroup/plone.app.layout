@@ -1,7 +1,17 @@
 Changelog
 =========
 
-2.1.3 - Unreleased
+2.1.4 - Unreleased
+------------------
+
+- Make the body section- class based on the navigation root instead of the
+  portal root.
+  [elro]
+
+- Added navigation_root to plone_portal_state.
+  [elro]
+
+2.1.3 - 2011-03-02
 ------------------
 
 - Fixed i18n of the "Log in to add comments" button. It was a regression
@@ -35,6 +45,13 @@ Changelog
 
 - Remove login redirect alias. As of Plone 4.1 there is a login script.
   [elro]
+
+2.0.7 - 2011-02-25
+------------------
+
+- Fixed i18n of the "Log in to add comments" button. It was a regression since
+  2.0. This fixes http://dev.plone.org/plone/ticket/11525 
+  [vincentfretin]
 
 2.0.6 - 2011-01-03
 ------------------
