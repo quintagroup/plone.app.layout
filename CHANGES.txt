@@ -1,6 +1,11 @@
 Changelog
 =========
 
+- Links to authors are opened in an overlay.
+  refs PLIP 11697 http://dev.plone.org/plone/ticket/11697.
+  [thomasdesvenain]
+
+
 2.1.7 - Unreleased
 ------------------
 
@@ -12,9 +17,9 @@ Changelog
 2.1.6 - 2011-06-02
 ------------------
 
- - Use getPhysicalPath instead of absolute_url_path to handle correctly 
+ - Use getPhysicalPath instead of absolute_url_path to handle correctly
    virtual hosting.
-   This fixes http://dev.plone.org/plone/ticket/8787 
+   This fixes http://dev.plone.org/plone/ticket/8787
    [encolpe]
 
 
