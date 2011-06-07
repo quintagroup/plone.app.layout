@@ -1,14 +1,17 @@
 from gzip import GzipFile
 from StringIO import StringIO
 
+from DateTime import DateTime
 from zope.component import getMultiAdapter
+from zope.interface import alsoProvides
 from zope.publisher.interfaces import INotFound
+
+from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from Products.CMFCore.utils import getToolByName
 
 from Products.PloneTestCase.PloneTestCase import PloneTestCase
 from Products.PloneTestCase.PloneTestCase import setupPloneSite
-
 
 setupPloneSite()
 
@@ -41,7 +44,7 @@ class SiteMapTestCase(PloneTestCase):
         private = self.portal.private
         self.assertTrue('private' == self.wftool.getInfoFor(private,
                                                             'review_state'))
-        
+
         #setup published content that is accessible for anonymous
         self.portal.invokeFactory(id='published', type_name='Document')
         published = self.portal.published
@@ -49,14 +52,14 @@ class SiteMapTestCase(PloneTestCase):
         self.assertTrue('published' == self.wftool.getInfoFor(published,
                                                               'review_state'))
 
-        #setup pending content that is accessible for anonymous
+        #setup pending content that isn't accessible for anonymous
         self.portal.invokeFactory(id='pending', type_name='Document')
         pending = self.portal.pending
         self.wftool.doActionFor(pending, 'submit')
         self.assertTrue('pending' == self.wftool.getInfoFor(pending,
                                                             'review_state'))
         self.logout()
-        
+
     def uncompress(self, sitemapdata):
         sio = StringIO(sitemapdata)
         unziped = GzipFile(fileobj=sio)
@@ -77,7 +80,7 @@ class SiteMapTestCase(PloneTestCase):
             self.assertTrue(INotFound.providedBy(e))
         else:
             self.fail('The disabled sitemap view has to raise NotFound!')
-            
+
     def test_authenticated_before_anonymous(self):
         '''
         Requests for the sitemap by authenticated users are not cached.
@@ -128,7 +131,7 @@ class SiteMapTestCase(PloneTestCase):
         xml = self.uncompress(self.sitemap())
         self.assertFalse('<loc>http://nohost/plone/pending</loc>' in xml)
 
-        # changing the workflow state 
+        # changing the workflow state
         self.loginAsPortalOwner()
         pending = self.portal.pending
         self.wftool.doActionFor(pending, 'publish')
@@ -139,12 +142,118 @@ class SiteMapTestCase(PloneTestCase):
 
         #removing content
         self.loginAsPortalOwner()
-        self.portal.manage_delObjects(['published',])
+        self.portal.manage_delObjects(['published', ])
         self.logout()
 
         xml = self.uncompress(self.sitemap())
-        self.assertFalse('<loc>http://nohost/plone/published</loc>' in xml)        
+        self.assertFalse('<loc>http://nohost/plone/published</loc>' in xml)
 
+    def test_navroot(self):
+        '''
+        Sitemap generated from an INavigationRoot
+        '''
+        #setup navroot content that is accessible for anonymous
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory(id='navroot', type_name='Folder')
+        navroot = self.portal.navroot
+        self.wftool.doActionFor(navroot, 'publish')
+        self.assertTrue('published' == self.wftool.getInfoFor(navroot, 'review_state'))
+        alsoProvides(navroot, INavigationRoot)
+        navroot.invokeFactory(id='published', type_name='Document')
+        published = navroot.published
+        self.wftool.doActionFor(published, 'publish')
+        self.assertTrue('published' == self.wftool.getInfoFor(published, 'review_state'))
+        self.logout()
+        
+        sitemap = getMultiAdapter((self.portal.navroot, self.portal.REQUEST),
+                                       name='sitemap.xml.gz')
+        xml = self.uncompress(sitemap())
+        self.assertFalse('<loc>http://nohost/plone/published</loc>' in xml)
+        self.assertTrue('<loc>http://nohost/plone/navroot</loc>' in xml)
+        self.assertTrue('<loc>http://nohost/plone/navroot/published</loc>' in xml)
+
+    def test_types_not_searched(self):
+        '''
+        Test that types_not_searched is respected
+        '''
+        # Set News Items not to be searchable (more likely Images)
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory(id='newsitem', type_name='News Item')
+        newsitem = self.portal.newsitem
+        self.wftool.doActionFor(newsitem, 'publish')
+        self.assertTrue('published' == self.wftool.getInfoFor(newsitem, 'review_state'))
+        self.site_properties.manage_changeProperties(types_not_searched=['News Item'])
+        self.logout()
+        
+        xml = self.uncompress(self.sitemap())
+        self.assertFalse('<loc>http://nohost/plone/newsitem</loc>' in xml)
+
+
+    def test_types_not_searched(self):
+        '''
+        Test that types_not_searched is respected
+        '''
+        # Set News Items not to be searchable (more likely Images)
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory(id='newsitem', type_name='News Item')
+        newsitem = self.portal.newsitem
+        self.wftool.doActionFor(newsitem, 'publish')
+        self.assertTrue('published' == self.wftool.getInfoFor(newsitem, 'review_state'))
+        self.site_properties.manage_changeProperties(types_not_searched=['News Item'])
+        self.logout()
+        
+        xml = self.uncompress(self.sitemap())
+        self.assertFalse('<loc>http://nohost/plone/newsitem</loc>' in xml)
+
+    def test_typesUseViewActionInListings(self):
+        '''
+        Test that typesUseViewActionInListings is respected
+        '''
+        # Set News Items not to be searchable (more likely Images)
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory(id='newsitem', type_name='News Item')
+        newsitem = self.portal.newsitem
+        self.wftool.doActionFor(newsitem, 'publish')
+        self.assertTrue('published' == self.wftool.getInfoFor(newsitem, 'review_state'))
+        self.site_properties.manage_changeProperties(typesUseViewActionInListings=['News Item'])
+        self.logout()
+        
+        xml = self.uncompress(self.sitemap())
+        self.assertTrue('<loc>http://nohost/plone/newsitem/view</loc>' in xml)
+
+    def test_default_pages(self):
+        '''
+        Default pages should show up at their parent's url with the greater of
+        their or their parent's modification time.
+        '''
+        
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory(id='folder', type_name='Folder')
+        folder = self.portal.folder
+        folder.default_page = "default"
+        self.wftool.doActionFor(folder, 'publish')
+        self.assertTrue('published' == self.wftool.getInfoFor(folder, 'review_state'))
+
+        folder.invokeFactory(id='default', type_name='Document')
+        default = folder.default
+        self.wftool.doActionFor(default, 'publish')
+        self.assertTrue('published' == self.wftool.getInfoFor(default, 'review_state'))
+        self.assertTrue(self.portal.plone_utils.isDefaultPage(default))
+
+        default.modification_date = DateTime("2001-01-01")
+        folder.modification_date = DateTime("2000-01-01")
+        self.portal.portal_catalog.reindexObject(folder)
+        self.portal.portal_catalog.reindexObject(default)
+        self.portal.default_page = "published"
+        self.portal.portal_catalog.reindexObject(self.portal.published)
+        self.logout()
+        
+        xml = self.uncompress(self.sitemap())
+        self.assertFalse('<loc>http://nohost/plone/folder/default</loc>' in xml)
+        self.assertTrue('<loc>http://nohost/plone/folder</loc>' in xml)
+        self.assertTrue('<lastmod>2001-01-01T' in xml)
+        self.assertTrue('<loc>http://nohost/plone</loc>' in xml)
+        self.assertFalse('<loc>http://nohost/plone/published</loc>' in xml)
 
 def test_suite():
     from unittest import defaultTestLoader

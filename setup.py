@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '2.1.4'
+version = '2.1.7'
 
 setup(name='plone.app.layout',
       version=version,
@@ -27,6 +27,8 @@ setup(name='plone.app.layout',
       extras_require=dict(
         test=[
           'Products.PloneTestCase',
+          'unittest2',
+          'plone.app.testing',
       ]),
       install_requires=[
         'setuptools',
