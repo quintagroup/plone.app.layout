@@ -29,6 +29,7 @@ setup(name='plone.app.layout',
           'Products.PloneTestCase',
           'unittest2',
           'plone.app.testing',
+          'plone.app.s5slideshow',
       ]),
       install_requires=[
         'setuptools',
