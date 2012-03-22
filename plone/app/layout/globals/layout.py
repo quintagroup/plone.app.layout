@@ -2,6 +2,7 @@ from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletManagerRenderer
+from plone.app.blocks.layoutbehavior import ILayoutAware
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.component import queryMultiAdapter
@@ -150,5 +151,9 @@ class LayoutPolicy(BrowserView):
         # class for hiding icons (optional)
         if self.icons_visible():
             body_class += ' icons-on'
+
+        # deco enabled for this content type
+        if ILayoutAware.providedBy(self.context):
+            body_class += ' deco-on'
 
         return body_class
