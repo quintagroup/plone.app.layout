@@ -1,8 +1,37 @@
 Changelog
 =========
 
-2.3.3 (unreleased)
+2.4a1 (unreleased)
 ------------------
+
+- Remove presentation mode. If the feature is still desired use
+  the plone.app.s5slideshow add-on.
+  [davisagli]
+
+
+2.3.4 (2013-03-05)
+------------------
+
+- handle missing feed type so it doesn't throw an error
+  [vangheem]
+
+- handle absense of ACTUAL_URL on request.
+  Fixes https://dev.plone.org/ticket/13173
+  [vangheem]
+
+- Also show history on the folder contents view
+  [vangheem]
+
+
+2.3.3 (2013-01-01)
+------------------
+
+- Changed the behaviour of the title viewlet for items in the portal_factory.
+  See https://dev.plone.org/ticket/12117
+  [alert]
+
+- Fix an edge case where getNavigationRootObject could loop infinitely.
+  [davisagli]
 
 - Add 'subsection' prefix to the all sections below to avoid classnames
   that start with digits, which is not permitted by the CSS standard.
