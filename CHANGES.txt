@@ -4,9 +4,19 @@ Changelog
 2.4a1 (unreleased)
 ------------------
 
+- Use tableofcontents-viewlet for plone.app.contenttypes
+  Fixes https://github.com/plone/plone.app.contenttypes/issues/34
+  [pbauer]
+
 - Remove presentation mode. If the feature is still desired use
   the plone.app.s5slideshow add-on.
   [davisagli]
+
+- Add Dexterity support for the related items viewlet.
+  [pabo]
+
+- PEP8 cleanup.
+  [timo]
 
 
 2.3.4 (2013-03-05)

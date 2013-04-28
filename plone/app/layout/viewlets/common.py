@@ -16,7 +16,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFPlone import PloneMessageFactory as _
 
 from plone.app.layout.globals.interfaces import IViewView
 
@@ -35,7 +34,8 @@ class ViewletBase(BrowserView):
         self.manager = manager
 
     @property
-    @deprecate("Use site_url instead. ViewletBase.portal_url will be removed in Plone 4")
+    @deprecate("Use site_url instead. " +
+               "ViewletBase.portal_url will be removed in Plone 4")
     def portal_url(self):
         return self.site_url
 
@@ -46,7 +46,8 @@ class ViewletBase(BrowserView):
         self.navigation_root_url = self.portal_state.navigation_root_url()
 
     def render(self):
-        # defer to index method, because that's what gets overridden by the template ZCML attribute
+        # defer to index method, because that's what gets overridden by the
+        # template ZCML attribute
         return self.index()
 
     def index(self):
@@ -119,6 +120,10 @@ class TableOfContentsViewlet(ViewletBase):
             except KeyError:
                 # schema not updated yet
                 self.enabled = False
+        # handle dexterity-behavior
+        toc = getattr(obj, 'table_of_contents', None)
+        if toc is not None:
+            self.enabled = toc
 
 
 class SkipLinksViewlet(ViewletBase):
@@ -149,11 +154,12 @@ class SearchBoxViewlet(ViewletBase):
                                         name=u'plone_context_state')
 
         props = getToolByName(self.context, 'portal_properties')
-        livesearch = props.site_properties.getProperty('enable_livesearch', False)
+        livesearch = props.site_properties.getProperty(
+            'enable_livesearch', False)
         if livesearch:
             self.search_input_id = "searchGadget"
         else:
-            self.search_input_id = "nolivesearchGadget" # don't use "" here!
+            self.search_input_id = "nolivesearchGadget"  # don't use "" here!
 
         folder = context_state.folder()
         self.folder_path = '/'.join(folder.getPhysicalPath())
@@ -173,7 +179,8 @@ class LogoViewlet(ViewletBase):
             logoName = 'logo.jpg'
 
         logoTitle = self.portal_state.portal_title()
-        self.logo_tag = portal.restrictedTraverse(logoName).tag(title=logoTitle, alt=logoTitle)
+        self.logo_tag = portal.restrictedTraverse(
+            logoName).tag(title=logoTitle, alt=logoTitle)
         self.navigation_root_title = self.portal_state.navigation_root_title()
 
 
@@ -215,9 +222,9 @@ class GlobalSectionsViewlet(ViewletBase):
         # Sort by path length, the longest matching path wins
         valid_actions.sort()
         if valid_actions:
-            return {'portal' : valid_actions[-1][1]}
+            return {'portal': valid_actions[-1][1]}
 
-        return {'portal' : default_tab}
+        return {'portal': default_tab}
 
 
 class PersonalBarViewlet(ViewletBase):
@@ -243,7 +250,7 @@ class PersonalBarViewlet(ViewletBase):
                 self.homelink_url = "%s/useractions" % self.navigation_root_url
             else:
                 self.homelink_url = "%s/personalize_form" % (
-                                        self.navigation_root_url)
+                    self.navigation_root_url)
 
             membership = getToolByName(context, 'portal_membership')
             member_info = membership.getMemberInfo(userid)
@@ -263,7 +270,8 @@ class ContentViewsViewlet(ViewletBase):
     index = ViewPageTemplateFile('contentviews.pt')
 
     @memoize
-    def prepareObjectTabs(self, default_tab='view', sort_first=['folderContents']):
+    def prepareObjectTabs(self, default_tab='view',
+                          sort_first=['folderContents']):
         """Prepare the object tabs by determining their order and working
         out which tab is selected. Used in global_contentviews.pt
         """
@@ -296,7 +304,7 @@ class ContentViewsViewlet(ViewletBase):
             request_url_path = request_url_path[1:]
 
         for item in action_list:
-            item.update({'selected' : False})
+            item.update({'selected': False})
 
             action_url = item['url'].strip()
             starts = action_url.startswith
@@ -346,9 +354,10 @@ class ManagePortletsFallbackViewlet(ViewletBase):
     index = ViewPageTemplateFile('manage_portlets_fallback.pt')
 
     def update(self):
-        ploneview = getMultiAdapter((self.context, self.request), name=u'plone')
+        ploneview = getMultiAdapter((
+            self.context, self.request), name=u'plone')
         context_state = getMultiAdapter((self.context, self.request),
-                                         name=u'plone_context_state')
+                                        name=u'plone_context_state')
 
         self.portlet_assignable = context_state.portlet_assignable()
         self.sl = ploneview.have_portlets('plone.leftcolumn', self.context)
@@ -357,7 +366,11 @@ class ManagePortletsFallbackViewlet(ViewletBase):
 
     def available(self):
         secman = getSecurityManager()
-        if not secman.checkPermission('Portlets: Manage portlets', self.context):
+        has_manage_portlets_permission = secman.checkPermission(
+            'Portlets: Manage portlets',
+            self.context
+        )
+        if not has_manage_portlets_permission:
             return False
         elif not self.sl and not self.sr and self.portlet_assignable:
             return True
@@ -403,4 +416,3 @@ class FooterViewlet(ViewletBase):
     def update(self):
         super(FooterViewlet, self).update()
         self.year = date.today().year
-
