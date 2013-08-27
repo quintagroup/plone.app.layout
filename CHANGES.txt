@@ -4,6 +4,9 @@ Changelog
 2.4a1 (unreleased)
 ------------------
 
+- for contentview urls, add csrf token automatically
+  [vangheem]
+
 - Use tableofcontents-viewlet for plone.app.contenttypes
   Fixes https://github.com/plone/plone.app.contenttypes/issues/34
   [pbauer]

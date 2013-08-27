@@ -18,6 +18,7 @@ from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.app.layout.globals.interfaces import IViewView
+from plone.protect.utils import addTokenToUrl
 
 
 class ViewletBase(BrowserView):
@@ -307,6 +308,7 @@ class ContentViewsViewlet(ViewletBase):
                 item['url'] = action_url
             else:
                 item['url'] = '%s/%s' % (context_url, action_url)
+            item['url'] = addTokenToUrl(item['url'], self.request)
 
             action_method = item['url'].split('/')[-1]
 
