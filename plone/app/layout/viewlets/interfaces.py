@@ -18,6 +18,11 @@ class IPortalTop(IViewletManager):
     """
 
 
+class IPortalNavigation(IViewletManager):
+    """A viewlet managet that handles the navigation information
+    """
+
+
 class IPortalHeader(IViewletManager):
     """A viewlet manager that sits right after the skip to content links
     """

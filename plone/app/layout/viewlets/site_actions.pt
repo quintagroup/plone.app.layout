@@ -1,8 +1,9 @@
-<ul id="portal-siteactions"
+<nav id="portal-siteactions"
     tal:define="accesskeys python: {'sitemap' : '3', 'accessibility' : '0', 'contact' : '9'};"
     tal:condition="view/site_actions"
     i18n:domain="plone">
 
+    <ul>
     <li tal:repeat="saction view/site_actions"
         tal:attributes="id string:siteaction-${saction/id}"><a
            href=""
@@ -17,4 +18,5 @@
                            title title;
                            accesskey accesskey;"
            >Site action</a></li>
-</ul>
+    </ul>
+</nav>
