@@ -4,6 +4,19 @@ Changelog
 2.4a1 (unreleased)
 ------------------
 
+- Remove dependency on unittest2 as we are not going to test against
+  Python 2.6 anymore on Plone 5.0.
+  [hvelarde]
+
+- Update package dependencies and clearly specify this branch is for
+  Plone >=4.3 only (in fact, should be 5.0).
+  [hvelarde]
+
+- Fix 'plone.belowcontentbody.relateditems' viewlet to avoid trying to
+  display items if the user has no permission to view them (like content
+  in Private state).
+  [hvelarde]
+
 - Migrate portal_interface tool methods to plone_interface_info (PLIP #13770).
 - Remove deprecated portal_interface tool (PLIP #13770).
   [ale-rt]
