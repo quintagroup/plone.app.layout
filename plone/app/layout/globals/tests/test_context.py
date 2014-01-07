@@ -230,9 +230,4 @@ class TestContextStateView(GlobalsTestCase):
 
     def test_actions(self):
         actions = self.fview.actions('user')
-        self.failUnless(actions[0]['category'] == 'user')
-
-
-def test_suite():
-    from unittest import defaultTestLoader
-    return defaultTestLoader.loadTestsFromName(__name__)
+        self.assertTrue(actions[0]['category'] == 'user')

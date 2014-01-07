@@ -19,11 +19,15 @@ from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.content.browser.interfaces import IFolderContentsView
 
+import pkg_resources
+
 try:
+    pkg_resources.get_distribution('plone.app.relationfield')
+except pkg_resources.DistributionNotFound:
+    HAS_RELATIONFIELD = False
+else:
     from plone.app.relationfield.behavior import IRelatedItems
-    has_relationfield_installed = True
-except:
-    has_relationfield_installed = False
+    HAS_RELATIONFIELD = True
 
 
 class DocumentActionsViewlet(ViewletBase):
@@ -161,19 +165,30 @@ class ContentRelatedItems(ViewletBase):
                 res.sort(key=_key)
 
         # Dexterity
-        if has_relationfield_installed:
-            if IRelatedItems.providedBy(context):
-                related = context.relatedItems
-                if not related:
-                    return ()
-                res = [self.rel2brain(rel) for rel in related]
+        if HAS_RELATIONFIELD and IRelatedItems.providedBy(context):
+            related = context.relatedItems
+            if not related:
+                return ()
+            res = self.related2brains(related)
 
         return res
 
-    def rel2brain(self, rel):
+    def related2brains(self, related):
+        """Return a list of brains based on a list of relations. Will filter
+        relations if the user has no permission to access the content.
+
+        :param related: related items
+        :type related: list of relations
+        :return: list of catalog brains
+        """
         catalog = getToolByName(self.context, 'portal_catalog')
-        path = rel.to_path
-        return catalog(path={'query': path})[0]
+        brains = []
+        for r in related:
+            path = r.to_path
+            # the query will return an empty list if the user
+            # has no permission to see the target object
+            brains.extend(catalog(path={'query': path}))
+        return brains
 
 
 class WorkflowHistoryViewlet(ViewletBase):
@@ -296,7 +311,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
                 if version_id > 0:
                     info["diff_previous_url"] = (
                         "%s/@@history?one=%s&two=%s" %
-                        (context_url, version_id, version_id-1)
+                        (context_url, version_id, version_id - 1)
                     )
                 if not rt.isUpToDate(context, version_id):
                     info["diff_current_url"] = (
@@ -318,7 +333,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
         retrieve = history.retrieve
         getId = history.getVersionId
         # Count backwards from most recent to least recent
-        for i in xrange(history.getLength(countPurged=False)-1, -1, -1):
+        for i in xrange(history.getLength(countPurged=False) - 1, -1, -1):
             version_history.append(
                 morphVersionDataToHistoryFormat(retrieve(i, countPurged=False),
                                                 getId(i, countPurged=False)))

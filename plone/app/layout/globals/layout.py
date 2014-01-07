@@ -151,10 +151,13 @@ class LayoutPolicy(BrowserView):
            isinstance(template, ViewMixinForTemplates):
             # Browser view
             name = view.__name__
-        else:
+        elif template is not None:
             name = template.getId()
-        name = normalizer.normalize(name)
-        body_class = 'template-%s' % name
+        if name:
+            name = normalizer.normalize(name)
+            body_class = 'template-%s' % name
+        else:
+            body_class = ''
 
         # portal type class (optional)
         portal_type = normalizer.normalize(context.portal_type)
@@ -194,6 +197,6 @@ class LayoutPolicy(BrowserView):
         else:
             user = membership.getAuthenticatedMember()
             for role in user.getRolesInContext(self.context):
-                body_class += ' userrole-' + role.lower()
+                body_class += ' userrole-' + role.lower().replace(' ', '-')
 
         return body_class

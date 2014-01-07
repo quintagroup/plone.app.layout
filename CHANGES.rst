@@ -7,6 +7,38 @@ Changelog
 - for contentview urls, add csrf token automatically
   [vangheem]
 
+- Fix body class attribute errors when the user role contains space.
+  [Jian Aijun]
+
+- Remove dependency on unittest2 as we are not going to test against
+  Python 2.6 anymore on Plone 5.0.
+  [hvelarde]
+
+- Update package dependencies and clearly specify this branch is for
+  Plone >=4.3 only (in fact, should be 5.0).
+  [hvelarde]
+
+- Fix 'plone.belowcontentbody.relateditems' viewlet to avoid trying to
+  display items if the user has no permission to view them (like content
+  in Private state).
+  [hvelarde]
+
+- Migrate portal_interface tool methods to plone_interface_info (PLIP #13770).
+- Remove deprecated portal_interface tool (PLIP #13770).
+  [ale-rt]
+
+- Remove outdated and unused discussion code and tests.
+  [timo]
+
+- Use logo.png instead of logo.jpg
+  [esteele]
+
+- Add plone.app.relationfield to test dependencies,
+  needed to test dexterity support. [jpgimenez]
+
+- Don't break if None is passed as the template to bodyClass.
+  [davisagli]
+
 - Use tableofcontents-viewlet for plone.app.contenttypes
   Fixes https://github.com/plone/plone.app.contenttypes/issues/34
   [pbauer]
@@ -18,8 +50,38 @@ Changelog
 - PEP8 cleanup.
   [timo]
 
+- modified sections.pt for adding link target.
+  Fixed that portal_actions: 'Link Target' on
+  portal_actions/portal_tabs doesn't work.
+  [terapyon]
 
-2.3.6 (unreleased)
+2.3.9 (2013-09-25)
+------------------
+
+- Removed hard dependency on plone.app.relationfield.
+  [pabo, marcosfromero]
+
+
+2.3.8 (2013-09-16)
+------------------
+
+- Fix 'table of contents' for Dexterity types.
+  [pabo, pbauer, timo]
+
+- Use safe_unicode to decode the title of the object when retrieving the rss
+  links from the RSSViewlet.
+  [ichim-david]
+
+
+2.3.7 (2013-08-14)
+------------------
+
+- Don't try to getId() for the template-name body when there is no template.
+  Corrects an issue with the Dexterity schema editor.
+  [esteele]
+
+
+2.3.6 (2013-08-13)
 ------------------
 
 - Fix conflict with <body> class attribute improvement in TinyMCE.
