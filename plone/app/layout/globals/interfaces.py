@@ -72,10 +72,6 @@ class ILayoutPolicy(Interface):
         in site_properties.
         """
 
-    def renderBase():
-        """Returns the current URL to be used in the base tag.
-        """
-
     def bodyClass(template, view):
         """Returns the CSS class to be used on the body tag.
         """
@@ -274,4 +270,14 @@ class IContextState(Interface):
 class IViewView(Interface):
     """Marker interface which specifies that the current view is, in fact,
     a canonical "view" of the object, e.g. what may go on the "view" tab.
+    """
+
+
+class IPatternsSettings(Interface):
+    """ Interface to register global pattern settings adapters
+    """
+
+
+class IPatternsSettingsRenderer(Interface):
+    """ Interface for the adapter that renders the settings for patterns
     """

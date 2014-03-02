@@ -1,11 +1,33 @@
 Changelog
 =========
 
-2.4a1 (unreleased)
+2.5.1 (unreleased)
 ------------------
 
 - for contentview urls, add csrf token automatically
   [vangheem]
+
+
+2.5.0 (2014-03-02)
+------------------
+
+- Switch webstats_js setting from site_properties to p.a.registry.
+  (PLIP #10359: http://dev.plone.org/ticket/10359)
+  [timo]
+
+- Switch enable_sitemap setting from site_properties to p.a.registry.
+  (PLIP #10359: http://dev.plone.org/ticket/10359)
+  [timo]
+
+
+2.4a1 (unreleased)
+------------------
+
+- PLIP #13705: Remove <base> tag.
+  [frapell]
+
+- Make the link to plone.org open in a new tab/window.
+  [Toni Mueller]
 
 - Fix body class attribute errors when the user role contains space.
   [Jian Aijun]
@@ -54,6 +76,9 @@ Changelog
   Fixed that portal_actions: 'Link Target' on
   portal_actions/portal_tabs doesn't work.
   [terapyon]
+
+- Ported tests to plone.app.testing
+  [tomgross]
 
 2.3.9 (2013-09-25)
 ------------------

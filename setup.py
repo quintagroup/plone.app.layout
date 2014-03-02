@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '2.4a1.dev0'
+version = '2.5.1.dev0'
 
 long_description = \
     open("README.rst").read() + "\n" + open("CHANGES.rst").read()
@@ -60,7 +60,6 @@ setup(name='plone.app.layout',
               'plone.dexterity',
               'plone.locking',
               'plone.testing',
-              'Products.PloneTestCase',
               'z3c.relationfield',
               'zope.annotation',
           ]
